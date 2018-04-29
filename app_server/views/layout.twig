@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
-    <title>{{ title }}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>We Want Beer</title>
+    <meta charset="UTF-8">
+    {% block description %}{% endblock %}
+    <meta name="viewport" content="width=830">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" integrity="sha256-j+P6EZJVrbXgwSR5Mx+eCS6FvP9Wq27MBRC/ogVriY0=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    {% block stylesheet %}{% endblock %}
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/original-bg.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    {% block javascript %}{% endblock %}
+    <script src="/javascripts/age-verification.js"></script>
+    <script src="/javascripts/style-toggle.js"></script>
   </head>
+
   <body>
-    {% block body %}{% endblock %}
+    <script>
+  		ageVerification();
+  	</script>
+
+    {% block buttons %}{% endblock %}
+
+    <script>
+      setStyle();
+    </script>
+
+    <nav>
+      <a id="main-logo" href="/" aria-label="Logo de We Want Beer"></a>
+
+      {% block search %}{% endblock %}
+    </nav>
+
+    <div id="main-container">
+      {% block info %}{% endblock %}
+    </div>
+
+    {% block extrainfo %}{% endblock %}
+
+    <footer>
+        <div id="footer-container">
+          <div id="top-footer-container">
+            Beber con moderación. Prohibida su venta a menores de 18 años.<br>
+            Los nombres, marcas, y logotipos relacionados son propiedad de sus respectivos dueños.
+          </div>
+          <div id="bottom-footer-container">
+            Hecho con <span id="love-icon" aria-label="amor"></span> por <a class="github-user-link" href="https://github.com/rodrigo102195" target="_blank" rel="noopener">Rodrigo Licata</a> y <a class="github-user-link" href="https://github.com/DamianNud" target="_blank" rel="noopener">Damián Nudelman</a>. © 2018.
+          </div>
+        </div>
+    </footer>
+
+    {% block bodyscript %}{% endblock %}
   </body>
 </html>

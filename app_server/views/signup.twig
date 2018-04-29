@@ -1,0 +1,29 @@
+{% extends 'layout.twig' %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock %}
+
+{% block javascript %}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+  <script src="/javascripts/login-signup-actions.js"></script>
+{% endblock %}
+
+{% block info %}
+  <form id="signup-form">
+    <input class="login-signup-input" type="text" placeholder="Nombre de usuario" maxlength="64">
+    <button class="input-warning-icon" data-toggle="tooltip" data-placement="left" title="Nombre de usuario requerido"></button>
+    <input class="login-signup-input" type="text" placeholder="Correo electrónico" maxlength="64">
+    <button class="input-warning-icon" data-toggle="tooltip" data-placement="left" title="Correo electrónico requerido"></button>
+    <input class="login-signup-input" type="password" placeholder="Contraseña" maxlength="64">
+    <button class="input-warning-icon" data-toggle="tooltip" data-placement="left" title="Contraseña requerida"></button>
+    <input class="login-signup-input" type="password" placeholder="Confirmar contraseña" maxlength="64">
+    <button class="input-warning-icon" data-toggle="tooltip" data-placement="left" title="Confirmación de contraseña requerida"></button>
+    <button id="login-signup-submit-btn" type="submit">Registrarse</button>
+  </form>
+  <span class="login-signup-text">¿Ya tenés cuenta? <a class="login-signup-btn" href="/login/">Ingresá</a></span>
+{% endblock %}
+
+{% block bodyscript %}
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
+{% endblock %}

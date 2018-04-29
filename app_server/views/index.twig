@@ -1,7 +1,43 @@
 {% extends 'layout.twig' %}
 
-{% block body %}
-  <h1>{{title}}</h1>
-  {% include "shared/compartido.twig" %}
-   Hola con express y EJS 
+{% block description %}
+  <meta name="description" content="Información sobre cervecerías artesanales en la ciudad de Bahía Blanca">
+{% endblock %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock %}
+
+{% block javascript %}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+  <script src="/javascripts/index-actions.js"></script>
+  <script src="/javascripts/search.js"></script>
+{% endblock %}
+
+{% block buttons %}
+  <a id="login-btn" href="/login/">Ingresar</a>
+  <label id="style-toggle-switch">
+    <input id="switch-checkbox" type="checkbox" checked="checked">
+    <span id="switch-slider"></span>
+  </label>
+{% endblock %}
+
+{% block info %}
+  <table id="bar-logos-table">
+      <!-- Links a las cervecerias -->
+  </table>
+  <div id="arrow-container"><a id="show-more-arrow" href="#" aria-label="Mostrar mas cervecerias"></a></div>
+{% endblock %}
+
+{% block extrainfo %}
+  <div id="map-container">
+    <div id="map">
+      <!-- Mapa -->
+    </div>
+  </div>
+
+  <div id="inform-container">
+    <span id="inform-text">¿Tu cervecería no aparece?</span>
+    <a id="inform-btn" href="#" onclick="return false">Avisanos</a>
+  </div>
 {% endblock %}

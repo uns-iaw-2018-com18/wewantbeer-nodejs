@@ -1,0 +1,21 @@
+{% extends 'layout.twig' %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-bar-rating/1.2.2/themes/fontawesome-stars.min.css" integrity="sha256-WFtpL3Xj79cn6l1G5NBnonoySqzhIArAFanE+6xwZ+I=" crossorigin="anonymous">
+{% endblock %}
+
+{% block javascript %}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bar-rating/1.2.2/jquery.barrating.min.js" integrity="sha256-4G5fW5q6We2bsDSgLCwkfKMFvGx/SbRsZkiNZbhXCvM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.1.10/libphonenumber-js.min.js" integrity="sha256-VC6fos/EGeOe0Jt2Od78OU6mk0scUd6gCdojMcRpiIo=" crossorigin="anonymous"></script>
+  <script src="/javascripts/bar-actions.js"></script>
+{% endblock %}
+
+{% block buttons %}
+  <a id="login-btn" href="/login/">Ingresar</a>
+  <label id="style-toggle-switch">
+    <input id="switch-checkbox" type="checkbox" checked="checked">
+    <span id="switch-slider"></span>
+  </label>
+{% endblock %}
