@@ -32,14 +32,8 @@ const cerveceriasSchema = new mongoose.Schema({
     type: [Number],
     index: '2dsphere'
   },
-  logo: {
-    data: Buffer,
-    contentType: String
-  }
-  foto: {
-    data: Buffer,
-    contentType: String
-  }
+  logo: String,
+  foto: String,
   facebook: String,
   instagram:String
 });
