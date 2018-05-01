@@ -162,6 +162,7 @@ input {
 .bar-logo {
   height: 250px;
   width: 250px;
+  display: inline-block;
 }
 
 #arrow-container {

@@ -22,6 +22,15 @@
   </label>
 {% endblock %}
 
+{% block search %}
+  <div id="search-container">
+    <form>
+      <input id="search-input" type="search" placeholder="Buscar cervecería" aria-label="Buscar cerveceria">
+      <button id="search-btn" type="submit" aria-label="Buscar"></button>
+    </form>
+  </div>
+{% endblock %}
+
 {% block info %}
   <table id="bar-logos-table">
       <!-- Links a las cervecerias -->

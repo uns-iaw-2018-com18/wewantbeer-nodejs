@@ -7,6 +7,7 @@ require('./app_server/models/db');
 
 const indexRouter = require('./app_server/routes/index');
 const userRouter = require('./app_server/routes/users');
+const apiRouter = require('./app_server/routes/api');
 
 const morgan = require('morgan');
 const app = express();
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', userRouter);
+app.use('/api', apiRouter);
 
 //Quiero usar morgan
 app.use(morgan('tiny'));

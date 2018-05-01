@@ -35,8 +35,7 @@ const cerveceriasSchema = new mongoose.Schema({
   logo: String,
   foto: String,
   facebook: String,
-  instagram:String
+  instagram: String
 });
 
-
-mongoose.model('Cervecerias',cerveceriasSchema);
+mongoose.model('Cervecerias', cerveceriasSchema);
