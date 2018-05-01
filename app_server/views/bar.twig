@@ -12,10 +12,6 @@
 {% endblock %}
 
 {% block info %}
-  <script>
-
-    alert(cerveza.id);
-  </script>
   <img id="info-bar-logo" src='{{cerveza.logo}}'>
    <img id="info-bar-picture" src='{{cerveza.foto}}'>
    <div id="info-bar-map-container">
@@ -48,7 +44,7 @@
 
      {% if {{cerveza.telefono}} != '' %}
      <span id="info-phone-text" class="info-text">
-        Teléfono: {{ cerveza.telefono }}
+        Teléfono: <a class='info-link' id="telefono" number='{{cerveza.telefono}}' href="#"></a>
      </span>
      {% endif %}
 

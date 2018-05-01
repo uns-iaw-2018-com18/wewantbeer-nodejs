@@ -11,7 +11,6 @@ const bar = function(req, res) {
       if(err){
         res.render('error',{error:err});
       }else{
-
         res.render('bar',{cerveza: cerveza, horarios:horario(cerveza)});
       }
     })

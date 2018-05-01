@@ -1,7 +1,8 @@
-var cerveceria = '{{ cerveza }}'
 
 $(function() {
-        mostrarPuntaje(cerveceria);
+
+        mostrarPuntaje();
+        formatNumber();
 });
 
 $(function() {
@@ -12,8 +13,9 @@ $(function() {
     });
 });
 
-function mostrarPuntaje(cerveceria) {
-  var initialLocalRating = localStorage.getItem("rating_" + cerveceria.id);
+function mostrarPuntaje() {
+  //var initialLocalRating = localStorage.getItem("rating_" + cerveceria.id);
+  var initialLocalRating = localStorage.getItem("rating_antares");
   var totalRating = calculateRating(initialLocalRating);
 
   $("#fontawesome-rating").barrating({
@@ -26,7 +28,8 @@ function mostrarPuntaje(cerveceria) {
         if (typeof(event) !== "undefined") {
           // El puntaje fue seleccionado por el usuario
           var toShow = calculateRating(value);
-          localStorage.setItem("rating_" + cerveceria.id, value);
+          //localStorage.setItem("rating_" + cerveceria.id, value);
+          localStorage.setItem("rating_antares", value);
           $("#info-rating-number").html(toShow);
           $("#fontawesome-rating").barrating("readonly", true);
           $("#fontawesome-rating").barrating("set", toShow);
@@ -48,8 +51,10 @@ function mostrarPuntaje(cerveceria) {
 
 function calculateRating(localRating) {
   var rating = 0;
-  var usersThatRated = cerveceria.cantidadPuntajes;
-  var ratingSum = cerveceria.sumaPuntajes;
+  //var usersThatRated = cerveceria.cantidadPuntajes;
+  var usersThatRated = 1;
+  //var ratingSum = cerveceria.sumaPuntajes;
+  var ratingSum = 1;
   if (localRating != null) {
     usersThatRated += 1;
     ratingSum += Number(localRating);
@@ -63,7 +68,8 @@ function calculateRating(localRating) {
 $(function() {
   $("#delete-user-rating").click(function() {
     var toShow = calculateRating(undefined);
-    localStorage.removeItem("rating_" + cerveceria.id);
+    //localStorage.removeItem("rating_" + cerveceria.id);
+    localStorage.removeItem("rating_antares");
     $("#user-rating").hide();
     if (toShow == 0) {
       $("#fontawesome-rating").barrating("clear");
@@ -109,4 +115,13 @@ function getQueryVariable(variable) {
     }
   }
   return(false);
+}
+
+function formatNumber(){
+  var script_tag = document.getElementById('telefono')
+  var number = script_tag.getAttribute("number");
+  //var formateado =libphonenumber.formatNumber(number, "International").replace(/\s+/g, '-') + libphonenumber.formatNumber(number, "National");
+  script_tag.setAttribute("href",'tel:'+libphonenumber.formatNumber(number, "International").replace(/\s+/g, '-'));
+  $("#telefono").html(libphonenumber.formatNumber(number, "National"));
+  //alert(formateado);
 }
