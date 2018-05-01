@@ -1,6 +1,6 @@
 
-$(function() {
 
+$(function() {
         mostrarPuntaje();
         formatNumber();
 });
@@ -14,8 +14,7 @@ $(function() {
 });
 
 function mostrarPuntaje() {
-  //var initialLocalRating = localStorage.getItem("rating_" + cerveceria.id);
-  var initialLocalRating = localStorage.getItem("rating_antares");
+  var initialLocalRating = localStorage.getItem("rating_" + id);
   var totalRating = calculateRating(initialLocalRating);
 
   $("#fontawesome-rating").barrating({
@@ -28,8 +27,7 @@ function mostrarPuntaje() {
         if (typeof(event) !== "undefined") {
           // El puntaje fue seleccionado por el usuario
           var toShow = calculateRating(value);
-          //localStorage.setItem("rating_" + cerveceria.id, value);
-          localStorage.setItem("rating_antares", value);
+          localStorage.setItem("rating_" + id, value);
           $("#info-rating-number").html(toShow);
           $("#fontawesome-rating").barrating("readonly", true);
           $("#fontawesome-rating").barrating("set", toShow);
@@ -51,10 +49,8 @@ function mostrarPuntaje() {
 
 function calculateRating(localRating) {
   var rating = 0;
-  //var usersThatRated = cerveceria.cantidadPuntajes;
-  var usersThatRated = 1;
-  //var ratingSum = cerveceria.sumaPuntajes;
-  var ratingSum = 1;
+  var usersThatRated = cantidadPuntajes;
+  var ratingSum = sumaPuntajes;
   if (localRating != null) {
     usersThatRated += 1;
     ratingSum += Number(localRating);
@@ -68,8 +64,7 @@ function calculateRating(localRating) {
 $(function() {
   $("#delete-user-rating").click(function() {
     var toShow = calculateRating(undefined);
-    //localStorage.removeItem("rating_" + cerveceria.id);
-    localStorage.removeItem("rating_antares");
+    localStorage.removeItem("rating_" + id);
     $("#user-rating").hide();
     if (toShow == 0) {
       $("#fontawesome-rating").barrating("clear");
@@ -104,24 +99,12 @@ function initMap() {
   });
 }
 
-// Obtener parametro de la URL
-function getQueryVariable(variable) {
-  var query = window.location.search.substring(1);
-  var vars = query.split("&");
-  for (var i = 0; i < vars.length; i++) {
-    var pair = vars[i].split("=");
-    if (pair[0] == variable) {
-      return pair[1];
-    }
-  }
-  return(false);
-}
-
 function formatNumber(){
-  var script_tag = document.getElementById('telefono')
-  var number = script_tag.getAttribute("number");
+  //number={{ cerveza.telefono|json_encode() }};
   //var formateado =libphonenumber.formatNumber(number, "International").replace(/\s+/g, '-') + libphonenumber.formatNumber(number, "National");
-  script_tag.setAttribute("href",'tel:'+libphonenumber.formatNumber(number, "International").replace(/\s+/g, '-'));
-  $("#telefono").html(libphonenumber.formatNumber(number, "National"));
+  if(telefono!=""){
+    document.getElementById("telefono").setAttribute("href",'tel:'+libphonenumber.formatNumber(telefono, "International").replace(/\s+/g, '-'));
+    $("#telefono").html(libphonenumber.formatNumber(telefono, "National"));
+  }
   //alert(formateado);
 }

@@ -8,8 +8,8 @@ const index = function(req, res) {
 
 const bar = function(req, res) {
   Cervecerias.findOne({'id':req.params.id}).exec((err,cerveza)=>{
-      if(err){
-        res.render('error',{error:err});
+      if(err || cerveza==null){
+        res.render('errorBusqueda',{search:req.params.id});
       }else{
         res.render('bar',{cerveza: cerveza, horarios:horario(cerveza)});
       }

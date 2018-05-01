@@ -8,10 +8,18 @@
 {% block javascript %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bar-rating/1.2.2/jquery.barrating.min.js" integrity="sha256-4G5fW5q6We2bsDSgLCwkfKMFvGx/SbRsZkiNZbhXCvM=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.1.10/libphonenumber-js.min.js" integrity="sha256-VC6fos/EGeOe0Jt2Od78OU6mk0scUd6gCdojMcRpiIo=" crossorigin="anonymous"></script>
+  <script>
+    var telefono = '{{ cerveza.telefono }}';
+    var cantidadPuntajes = '{{cerveza.cantidadPuntajes}}';
+    var sumaPuntajes = '{{cerveza.sumaPuntajes}}';
+    var id = '{{cerveza.id}}';
+  </script>
+
   <script src="/javascripts/bar-actions.js"></script>
 {% endblock %}
 
 {% block info %}
+
   <img id="info-bar-logo" src='{{cerveza.logo}}'>
    <img id="info-bar-picture" src='{{cerveza.foto}}'>
    <div id="info-bar-map-container">
@@ -35,20 +43,20 @@
      </div>
 
 
-     {% if {{cerveza.direccion}} != '' %}
-      <a id="info-directions-btn" href='https://www.google.com/maps/dir/{{cerveza.direccion|replace(' ', '-')}}B8000+Bahía+Blanca,+Buenos+Aires/' target="_blank" rel="noopener">Cómo llegar</a>
+     {% if cerveza.direccion != '' %}
+      <a id="info-directions-btn" href='https://www.google.com/maps/dir//{{cerveza.direccion|replace({' ':'+'})}},+B8000+Bahía+Blanca,+Buenos+Aires/' target="_blank" rel="noopener">Cómo llegar</a>
       <span id="info-address-text" class="info-text">
         Dirección: {{ cerveza.direccion }}
       </span>
     {% endif %}
 
-     {% if {{cerveza.telefono}} != '' %}
+     {% if cerveza.telefono != '' %}
      <span id="info-phone-text" class="info-text">
-        Teléfono: <a class='info-link' id="telefono" number='{{cerveza.telefono}}' href="#"></a>
+        Teléfono: <a class='info-link' id="telefono" href="#"></a>
      </span>
      {% endif %}
 
-     {% if {{horarios}} != [] %}
+     {% if horarios != [] %}
      <span id="info-time-text" class="info-text">Horario: </span>
      <div id="time-box">
        <div id="today-time">{{horarios[0]}}<a id="expand-arrow" href="#" aria-label="Mostrar todos los dias"></a></div>
@@ -62,19 +70,19 @@
      </div>
      {% endif %}
 
-     {% if {{cerveza.happyHour}} != '' %}
+     {% if cerveza.happyHour != '' %}
      <span id="info-happyhour-text" class="info-text">
         Happy hour: {{ cerveza.happyHour }}
      </span>
     {% endif %}
 
-    {% if {{cerveza.web}} != '' %}
+    {% if cerveza.web != '' %}
     <span id="info-web-text" class="info-text">
       Web: <a class='info-link' href='http://{{cerveza.web}}/' target='_blank' rel='noopener'> {{cerveza.web}} </a>
     </span>
     {% endif %}
 
-    {% if {{cerveza.email}} != '' %}
+    {% if cerveza.email != '' %}
       <span id="info-email-text" class="info-text">
         Email: <a class='info-link' href='mailto:{{cerveza.email}}'>{{cerveza.email}}</a>
       </span>
@@ -82,13 +90,15 @@
 
      <div id="info-social-network-links">
 
-       {% if {{cerveza.instagram}} != '' %}
+       {% if cerveza.facebook != ''%}
+         <a id='info-facebook-icon' href='https://www.facebook.com/{{cerveza.facebook}}/' target='_blank' rel='noopener'></a>
+       {% endif %}
+
+       {% if cerveza.instagram != '' %}
          <a id='info-instagram-icon' href='https://www.instagram.com/{{cerveza.instagram}}/' target='_blank' rel='noopener'></a>
        {% endif %}
 
-      {% if {{cerveza.facebook}} != ''%}
-        <a id='info-facebook-icon' href='https://www.facebook.com/{{cerveza.facebook}}/' target='_blank' rel='noopener'></a>
-      {% endif %}
+
 
      </div>
    </div>
