@@ -6,7 +6,7 @@ const ctrlMain = require('../controllers/main');
 router.get('/', ctrlMain.index);
 
 /* GET bar */
-router.get('/bar/', ctrlMain.bar);
+router.get('/bar/:id', ctrlMain.bar);
 
 /* GET login */
 router.get('/login/', ctrlMain.login);

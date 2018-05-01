@@ -6,12 +6,100 @@
 {% endblock %}
 
 {% block javascript %}
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bar-rating/1.2.2/jquery.barrating.min.js" integrity="sha256-4G5fW5q6We2bsDSgLCwkfKMFvGx/SbRsZkiNZbhXCvM=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.1.10/libphonenumber-js.min.js" integrity="sha256-VC6fos/EGeOe0Jt2Od78OU6mk0scUd6gCdojMcRpiIo=" crossorigin="anonymous"></script>
   <script src="/javascripts/bar-actions.js"></script>
 {% endblock %}
 
+{% block info %}
+  <script>
+
+    alert(cerveza.id);
+  </script>
+  <img id="info-bar-logo" src='{{cerveza.logo}}'>
+   <img id="info-bar-picture" src='{{cerveza.foto}}'>
+   <div id="info-bar-map-container">
+     <div id="map">
+       <!-- Mapa -->
+     </div>
+   </div>
+   <div id="info-container">
+
+     <div id="rating-container">
+       <span id="info-rating-number"></span>
+       <select id="fontawesome-rating" name="rating" autocomplete="off">
+         <option value=""></option>
+         <option value="1">1</option>
+         <option value="2">2</option>
+         <option value="3">3</option>
+         <option value="4">4</option>
+         <option value="5">5</option>
+       </select>
+       <div id="user-rating">Tu puntaje es de: <span id="user-rating-value"></span><a id="delete-user-rating" href="#" aria-label="Eliminar puntaje"></a></div>
+     </div>
+
+
+     {% if {{cerveza.direccion}} != '' %}
+      <a id="info-directions-btn" href='https://www.google.com/maps/dir/{{cerveza.direccion|replace(' ', '-')}}B8000+Bahía+Blanca,+Buenos+Aires/' target="_blank" rel="noopener">Cómo llegar</a>
+      <span id="info-address-text" class="info-text">
+        Dirección: {{ cerveza.direccion }}
+      </span>
+    {% endif %}
+
+     {% if {{cerveza.telefono}} != '' %}
+     <span id="info-phone-text" class="info-text">
+        Teléfono: {{ cerveza.telefono }}
+     </span>
+     {% endif %}
+
+     {% if {{horarios}} != [] %}
+     <span id="info-time-text" class="info-text">Horario: </span>
+     <div id="time-box">
+       <div id="today-time">{{horarios[0]}}<a id="expand-arrow" href="#" aria-label="Mostrar todos los dias"></a></div>
+       <div id="hidden-days-list">
+         {% for horario in horarios %}
+            {% if not loop.first %}
+              <div>{{horario}}</div>
+            {% endif %}
+        {% endfor %}
+       </div>
+     </div>
+     {% endif %}
+
+     {% if {{cerveza.happyHour}} != '' %}
+     <span id="info-happyhour-text" class="info-text">
+        Happy hour: {{ cerveza.happyHour }}
+     </span>
+    {% endif %}
+
+    {% if {{cerveza.web}} != '' %}
+    <span id="info-web-text" class="info-text">
+      Web: <a class='info-link' href='http://{{cerveza.web}}/' target='_blank' rel='noopener'> {{cerveza.web}} </a>
+    </span>
+    {% endif %}
+
+    {% if {{cerveza.email}} != '' %}
+      <span id="info-email-text" class="info-text">
+        Email: <a class='info-link' href='mailto:{{cerveza.email}}'>{{cerveza.email}}</a>
+      </span>
+    {% endif %}
+
+     <div id="info-social-network-links">
+
+       {% if {{cerveza.instagram}} != '' %}
+         <a id='info-instagram-icon' href='https://www.instagram.com/{{cerveza.instagram}}/' target='_blank' rel='noopener'></a>
+       {% endif %}
+
+      {% if {{cerveza.facebook}} != ''%}
+        <a id='info-facebook-icon' href='https://www.facebook.com/{{cerveza.facebook}}/' target='_blank' rel='noopener'></a>
+      {% endif %}
+
+     </div>
+   </div>
+<div id="mapcoords" data-lat="{{cerveza.latLong[0]}}" data-lng="{{cerveza.latLong[1]}}">
+  <script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UheGSM6zHbQvf0MU5zSrdZNJCdMrZoQ&callback=initMap'></script>
+</div>
+{% endblock %}
 {% block buttons %}
   <a id="login-btn" href="/login/">Ingresar</a>
   <label id="style-toggle-switch">
