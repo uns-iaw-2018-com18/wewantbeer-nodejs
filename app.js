@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const bodyParser = require('body-parser');
 require('./app_server/models/db');
 
 const indexRouter = require('./app_server/routes/index');
@@ -21,10 +22,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/api', apiRouter);
+
+app.post('/rating', (req, res) => {
+  console.log(req.body.rating);
+  // ToDo
+});
 
 //Quiero usar morgan
 app.use(morgan('tiny'));

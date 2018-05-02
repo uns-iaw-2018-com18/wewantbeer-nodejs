@@ -37,7 +37,7 @@ function goToSearch(value) {
   if (id !== undefined) {
     window.location.href = "bar/" + id + "/";
   } else {
-    window.location.href = "bar" + value.toLowerCase().replace(/\s+/g, '_') + "/";
+    window.location.href = "bar/" + value.toLowerCase().replace(/\s+/g, '_') + "/";
   }
 }
 

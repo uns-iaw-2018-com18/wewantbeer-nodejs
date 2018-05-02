@@ -1,8 +1,6 @@
-
-
 $(function() {
-        mostrarPuntaje();
-        formatNumber();
+  mostrarPuntaje();
+  formatNumber();
 });
 
 $(function() {
@@ -78,7 +76,6 @@ $(function() {
 });
 
 function initMap() {
-
   var cerveceriaCoordenadas = new google.maps.LatLng(parseFloat(document.getElementById('mapcoords').getAttribute("data-lat")), parseFloat(document.getElementById('mapcoords').getAttribute("data-lng")));
   var map = new google.maps.Map(document.getElementById("map"), {
     zoom: 16,
@@ -108,3 +105,9 @@ function formatNumber(){
   }
   //alert(formateado);
 }
+
+$(function () {
+  $("#rating-form").change(function() {
+    $(this).submit();
+  });
+});
