@@ -16,6 +16,9 @@ const bar = function(req, res) {
     })
 };
 
+
+
+
 function horario(cerveceria) {
   var hoy = new Date().getDay();
   var toRet=[];
@@ -39,5 +42,9 @@ const login = function(req, res) {
 const signup = function(req, res) {
   res.render('signup');
 };
+
+const rating = function(req, res){
+
+}
 
 module.exports = {index, bar, login, signup};

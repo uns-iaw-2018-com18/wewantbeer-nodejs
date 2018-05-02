@@ -23,7 +23,10 @@ function mostrarPuntaje() {
       initialRating: totalRating,
       onSelect: function(value, text, event) {
         if (typeof(event) !== "undefined") {
-          // El puntaje fue seleccionado por el usuario
+          var data = {};
+					data.id = id;
+					data.rating = value;
+          $.post("/rating",data);
           var toShow = calculateRating(value);
           localStorage.setItem("rating_" + id, value);
           $("#info-rating-number").html(toShow);
@@ -97,17 +100,8 @@ function initMap() {
 }
 
 function formatNumber(){
-  //number={{ cerveza.telefono|json_encode() }};
-  //var formateado =libphonenumber.formatNumber(number, "International").replace(/\s+/g, '-') + libphonenumber.formatNumber(number, "National");
   if(telefono!=""){
     document.getElementById("telefono").setAttribute("href",'tel:'+libphonenumber.formatNumber(telefono, "International").replace(/\s+/g, '-'));
     $("#telefono").html(libphonenumber.formatNumber(telefono, "National"));
   }
-  //alert(formateado);
 }
-
-$(function () {
-  $("#rating-form").change(function() {
-    $(this).submit();
-  });
-});
