@@ -26,6 +26,7 @@ function mostrarPuntaje() {
           var data = {};
 					data.id = id;
 					data.rating = value;
+          data.mode=1;
           $.post("/rating",data);
           var toShow = calculateRating(value);
           localStorage.setItem("rating_" + id, value);
@@ -64,6 +65,11 @@ function calculateRating(localRating) {
 
 $(function() {
   $("#delete-user-rating").click(function() {
+    var data = {};
+    data.id = id;
+    data.rating = localStorage.getItem("rating_" + id);
+    data.mode=0;
+    $.post("/rating",data);
     var toShow = calculateRating(undefined);
     localStorage.removeItem("rating_" + id);
     $("#user-rating").hide();

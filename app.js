@@ -37,7 +37,7 @@ app.post('/rating', (req, res) => {
   console.log('rating: '+req.body.rating);
   console.log("------");
 
-  actualizarRating(req.body.rating,req.body.id);
+  actualizarRating(req.body.rating,req.body.id,req.body.mode);
 	res.send(req.body);
 });
 
@@ -64,14 +64,22 @@ app.use(function(err, req, res, next) {
 
 
 
-function actualizarRating(nuevoValor,cerveceriaId){
+function actualizarRating(nuevoValor,cerveceriaId,mode){
+
   Cervecerias.findOne({'id':cerveceriaId}).exec((err,cerveza)=>{
-      var puntaje=cerveza.sumaPuntajes+Number(nuevoValor);
-      var cantidad=cerveza.cantidadPuntajes+1;
+      var puntaje,cantidad;
+      if(mode==1){
+         puntaje=cerveza.sumaPuntajes+Number(nuevoValor);
+         cantidad=cerveza.cantidadPuntajes+1;
+      }else{
+        puntaje=cerveza.sumaPuntajes-Number(nuevoValor);
+        cantidad=cerveza.cantidadPuntajes-1;
+      }
       Cervecerias.updateOne({ id:cerveceriaId},{$set: {sumaPuntajes:puntaje, cantidadPuntajes:cantidad}},function(err, res) {
         if (err) throw err;
         console.log("1 document updated");
       });
   });
+
 }
 module.exports = app;
