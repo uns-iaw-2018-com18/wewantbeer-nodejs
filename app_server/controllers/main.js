@@ -43,8 +43,4 @@ const signup = function(req, res) {
   res.render('signup');
 };
 
-const rating = function(req, res){
-
-}
-
 module.exports = {index, bar, login, signup};

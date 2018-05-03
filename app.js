@@ -31,15 +31,6 @@ app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/api', apiRouter);
 
-//Quiero usar morgan
-app.use(morgan('tiny'));
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-app.get('*',(req,res)=>{
-  res.end('Archivo no encontrado');
-});
 app.post('/rating', (req, res) => {
   console.log("------");
   console.log('id: ' + req.body.id);
@@ -49,6 +40,17 @@ app.post('/rating', (req, res) => {
   actualizarRating(req.body.rating,req.body.id);
 	res.send(req.body);
 });
+
+//Quiero usar morgan
+app.use(morgan('tiny'));
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+app.get('*',(req,res)=>{
+  res.end('Archivo no encontrado');
+});
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
