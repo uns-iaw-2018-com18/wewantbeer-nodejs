@@ -1,6 +1,9 @@
 $(function() {
   mostrarPuntaje();
   formatNumber();
+
+  // Mostrar tooltip
+  $("[data-toggle='tooltip']").tooltip();
 });
 
 $(function() {
@@ -23,11 +26,9 @@ function mostrarPuntaje() {
       initialRating: totalRating,
       onSelect: function(value, text, event) {
         if (typeof(event) !== "undefined") {
-          var data = {};
-					data.id = id;
-					data.rating = value;
-          data.mode=1;
-          $.post("/rating",data);
+          var data = {"id": id, "rating": value};
+          $.post("/api/rate", data);
+
           var toShow = calculateRating(value);
           localStorage.setItem("rating_" + id, value);
           $("#info-rating-number").html(toShow);
@@ -65,11 +66,9 @@ function calculateRating(localRating) {
 
 $(function() {
   $("#delete-user-rating").click(function() {
-    var data = {};
-    data.id = id;
-    data.rating = localStorage.getItem("rating_" + id);
-    data.mode=0;
-    $.post("/rating",data);
+    var data = {"id": id, "rating": localStorage.getItem("rating_" + id)};
+    $.post("/api/unrate", data);
+
     var toShow = calculateRating(undefined);
     localStorage.removeItem("rating_" + id);
     $("#user-rating").hide();
@@ -105,9 +104,9 @@ function initMap() {
   });
 }
 
-function formatNumber(){
-  if(telefono!=""){
-    document.getElementById("telefono").setAttribute("href",'tel:'+libphonenumber.formatNumber(telefono, "International").replace(/\s+/g, '-'));
+function formatNumber() {
+  if (telefono != "") {
+    $("#telefono").attr("href", "tel:" + libphonenumber.formatNumber(telefono, "International").replace(/\s+/g, '-'));
     $("#telefono").html(libphonenumber.formatNumber(telefono, "National"));
   }
 }

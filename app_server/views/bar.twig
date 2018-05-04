@@ -36,7 +36,7 @@
   <div id="info-container">
     <div id="rating-container">
       <span id="info-rating-number"></span>
-      <form id="rating-form" action="/rating" method="post">
+      <form id="rating-form" data-toggle="tooltip" data-placement="bottom" title="Requiere ingresar para puntuar">
         <select id="fontawesome-rating" name="rating" autocomplete="off">
           <option value=""></option>
           <option value="1">1</option>
@@ -96,4 +96,5 @@
   <div id="mapcoords" data-lat="{{cerveza.latLong[0]}}" data-lng="{{cerveza.latLong[1]}}">
     <script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UheGSM6zHbQvf0MU5zSrdZNJCdMrZoQ&callback=initMap'></script>
   </div>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
 {% endblock %}

@@ -1,27 +1,23 @@
 const mongoose = require('mongoose');
 const Cervecerias = mongoose.model('Cervecerias');
 
-
 const index = function(req, res) {
   res.render('index');
 };
 
 const bar = function(req, res) {
-  Cervecerias.findOne({'id':req.params.id}).exec((err,cerveza)=>{
-      if(err || cerveza==null){
-        res.render('errorBusqueda',{search:req.params.id});
+  Cervecerias.findOne({'id': req.params.id}).exec((err, cerveza) => {
+      if(err || cerveza == null){
+        res.render('notfound', {search: req.params.id});
       }else{
-        res.render('bar',{cerveza: cerveza, horarios:horario(cerveza)});
+        res.render('bar', {cerveza: cerveza, horarios: horario(cerveza)});
       }
     })
 };
 
-
-
-
 function horario(cerveceria) {
   var hoy = new Date().getDay();
-  var toRet=[];
+  var toRet = [];
   if (cerveceria.horario[hoy].localeCompare("") != 0) {
     var weekdays = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
     toRet.push(weekdays[hoy] + " " + cerveceria.horario[hoy]);
