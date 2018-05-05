@@ -18,8 +18,8 @@
     <button id="login-signup-submit-btn" type="submit">Ingresar</button>
   </form>
   <span class="login-signup-text">¿No tenés cuenta? <a class="login-signup-btn" href="/signup/">Registrate</a></span>
-  <button id="facebook-login-signup" class="social-login-signup-btn">Ingresar con Facebook</button>
-  <button id="google-login-signup" class="social-login-signup-btn">Ingresar con Google</button>
+  <button id="facebook-login-signup" class="social-login-signup-btn" onClick="location.href='/auth/facebook'">Ingresar con Facebook</button>
+  <button id="google-login-signup" class="social-login-signup-btn" onClick="location.href='/auth/google'">Ingresar con Google</button>
 {% endblock %}
 
 {% block bodyscript %}
