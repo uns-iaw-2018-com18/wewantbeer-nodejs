@@ -22,7 +22,7 @@ const cerveceriasSchema = new mongoose.Schema({
   },
   cantidadPuntajes: {
     type: Number,
-    'default':0
+    'default': 0
   },
   horario:{
     type: [String]

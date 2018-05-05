@@ -1,5 +1,17 @@
 {% extends 'layout.twig' %}
 
+{% block buttons %}
+  {% if user %}
+    <a id="login-btn" href="/logout">{{ user.username }}</a>
+  {% else %}
+    <a id="login-btn" href="/login">Ingresar</a>
+  {% endif %}
+  <label id="style-toggle-switch">
+    <input id="switch-checkbox" type="checkbox" checked="checked">
+    <span id="switch-slider"></span>
+  </label>
+{% endblock %}
+
 {% block info %}
   <span class='notfound-text'>No se pudo encontrar la búsqueda "{{search}}"</span>
   <span class='notfound-text'><a class='notfound-link' href='/'>Volver al inicio</a></span>

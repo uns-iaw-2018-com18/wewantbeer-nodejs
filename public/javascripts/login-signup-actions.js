@@ -13,7 +13,6 @@ $(function () {
   });
   // Cuando se hace clic en el boton de ingresar/registrarse
   $("#login-signup-submit-btn").click(function(event) {
-    event.preventDefault();
     $(".login-signup-input").each(function() {
       if ($(this).val() == "") {
         $(this).next("button").show();

@@ -10,14 +10,14 @@
 {% endblock %}
 
 {% block info %}
-  <form id="login-form">
-    <input class="login-signup-input" type="text" placeholder="Usuario" maxlength="64">
+  <form id="login-form" action="login" method="post">
+    <input class="login-signup-input" type="text" name="username" placeholder="Usuario" maxlength="64">
     <button class="input-warning-icon" data-toggle="tooltip" data-placement="left" title="Usuario requerido"></button>
-    <input class="login-signup-input" type="password" placeholder="Contraseña" maxlength="64">
+    <input class="login-signup-input" type="password" name="password" placeholder="Contraseña" maxlength="64">
     <button class="input-warning-icon" data-toggle="tooltip" data-placement="left" title="Contraseña requerida"></button>
     <button id="login-signup-submit-btn" type="submit">Ingresar</button>
   </form>
-  <span class="login-signup-text">¿No tenés cuenta? <a class="login-signup-btn" href="/signup/">Registrate</a></span>
+  <span class="login-signup-text">¿No tenés cuenta? <a class="login-signup-btn" href="/signup">Registrate</a></span>
   <button id="facebook-login-signup" class="social-login-signup-btn" onClick="location.href='/auth/facebook'">Ingresar con Facebook</button>
   <button id="google-login-signup" class="social-login-signup-btn" onClick="location.href='/auth/google'">Ingresar con Google</button>
 {% endblock %}

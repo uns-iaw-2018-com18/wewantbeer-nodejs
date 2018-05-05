@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 const Cervecerias = mongoose.model('Cervecerias');
 
 const index = function(req, res) {
-  res.render('index');
+  res.render('index', {user: req.user});
 };
 
 const bar = function(req, res) {
   Cervecerias.findOne({'id': req.params.id}).exec((err, cerveza) => {
       if(err || cerveza == null){
-        res.render('notfound', {search: req.params.id});
+        res.render('notfound', {user: req.user, search: req.params.id});
       }else{
-        res.render('bar', {cerveza: cerveza, horarios: horario(cerveza)});
+        res.render('bar', {user: req.user, cerveza: cerveza, horarios: horario(cerveza)});
       }
     })
 };
@@ -31,12 +31,4 @@ function horario(cerveceria) {
   return toRet;
 }
 
-const login = function(req, res) {
-  res.render('login');
-};
-
-const signup = function(req, res) {
-  res.render('signup');
-};
-
-module.exports = {index, bar, login, signup};
+module.exports = {index, bar};

@@ -17,7 +17,7 @@ function mostrarCervecerias(maxRows) {
     for (j = 0; j < 3 && mostrar < cervecerias.length; j++) {
       cell = row.insertCell(j);
       cell.className = "bar-data-box";
-      cell.innerHTML = "<a href='bar/" + cervecerias[mostrar].id + "/'><img class='bar-logo' src='" + cervecerias[mostrar].logo + "' alt='" + cervecerias[mostrar].nombre + "'></a>";
+      cell.innerHTML = "<a href='bar/" + cervecerias[mostrar].id + "'><img class='bar-logo' src='" + cervecerias[mostrar].logo + "' alt='" + cervecerias[mostrar].nombre + "'></a>";
       mostrar++;
     }
   }

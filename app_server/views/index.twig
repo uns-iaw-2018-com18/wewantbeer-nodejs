@@ -15,7 +15,11 @@
 {% endblock %}
 
 {% block buttons %}
-  <a id="login-btn" href="/login/">Ingresar</a>
+  {% if user %}
+    <a id="login-btn" href="/logout">{{ user.username }}</a>
+  {% else %}
+    <a id="login-btn" href="/login">Ingresar</a>
+  {% endif %}
   <label id="style-toggle-switch">
     <input id="switch-checkbox" type="checkbox" checked="checked">
     <span id="switch-slider"></span>

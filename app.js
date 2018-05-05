@@ -4,18 +4,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 require('./app_server/models/db');
 
 const indexRouter = require('./app_server/routes/index');
 const userRouter = require('./app_server/routes/users');
 const apiRouter = require('./app_server/routes/api');
 const authRouter = require('./app_server/routes/auth');
-
-const passport = require('passport');
-const session = require('express-session');
-const FacebookStrategy = require('passport-facebook').Strategy;
-
-const morgan = require('morgan');
 const app = express();
 
 // view engine setup
@@ -30,23 +25,38 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/', indexRouter);
-app.use('/users', userRouter);
-app.use('/api', apiRouter);
-app.use('/auth',authRouter);
-// Quiero usar morgan
-app.use(morgan('tiny'));
-
-//passport config
-app.use(session({
-  secret: 's3cr3t',
+app.use(require('express-session')({
+  secret: 'wewantbeer-s3cr3t',
   resave: true,
   saveUninitialized: true
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/', indexRouter);
+app.use('/users', userRouter);
+app.use('/api', apiRouter);
+app.use('/', authRouter);
 
+// const session = require('express-session');
+// const FacebookStrategy = require('passport-facebook').Strategy;
+
+const morgan = require('morgan');
+
+// Quiero usar morgan
+app.use(morgan('tiny'));
+
+// passport config
+// requires the model with Passport-Local Mongoose plugged in
+const User = require('./app_server/models/users');
+
+// use static authenticate method of model in LocalStrategy
+passport.use(User.createStrategy());
+
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
