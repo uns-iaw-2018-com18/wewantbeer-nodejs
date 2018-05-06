@@ -12,14 +12,14 @@
 {% block info %}
   <form id="signup-form" action="signup" method="post">
     <input class="login-signup-input" type="text" name="username" placeholder="Nombre de usuario" maxlength="64">
-    <button class="input-warning-icon" data-toggle="tooltip" data-placement="left" title="Nombre de usuario requerido"></button>
+    <a class="input-warning-icon" href="#" data-toggle="tooltip" data-placement="left" title="Nombre de usuario requerido"></a>
     <input class="login-signup-input" type="text" name="email" placeholder="Correo electrónico" maxlength="64">
-    <button class="input-warning-icon" data-toggle="tooltip" data-placement="left" title="Correo electrónico requerido"></button>
+    <a class="input-warning-icon" href="#" data-toggle="tooltip" data-placement="left" title="Correo electrónico requerido"></a>
     <input class="login-signup-input" type="password" name="password" placeholder="Contraseña" maxlength="64">
-    <button class="input-warning-icon" data-toggle="tooltip" data-placement="left" title="Contraseña requerida"></button>
+    <a class="input-warning-icon" href="#" data-toggle="tooltip" data-placement="left" title="Contraseña requerida"></a>
     <input class="login-signup-input" type="password" name="confirmPassword" placeholder="Confirmar contraseña" maxlength="64">
-    <button class="input-warning-icon" data-toggle="tooltip" data-placement="left" title="Confirmación de contraseña requerida"></button>
-    <button id="login-signup-submit-btn" type="submit">Registrarse</button>
+    <a class="input-warning-icon" href="#" data-toggle="tooltip" data-placement="left" title="Confirmación de contraseña requerida"></a>
+    <input id="login-signup-submit-btn" type="submit" value="Registrarse">
   </form>
   <span class="login-signup-text">¿Ya tenés cuenta? <a class="login-signup-btn" href="/login">Ingresá</a></span>
 {% endblock %}

@@ -2,20 +2,20 @@ $(function () {
   // Cuando el campo pierde el foco
   $(".login-signup-input").focusout(function() {
     if ($(this).val() == "") {
-      $(this).next("button").show();
+      $(this).next("a").show();
       $(this).css("background-color", "#E6E6E6");
     }
   });
   // Cuando se ingresa un caracter en el campo
   $(".login-signup-input").keydown(function() {
-    $(this).next("button").hide();
+    $(this).next("a").hide();
     $(this).css("background-color", "white");
   });
   // Cuando se hace clic en el boton de ingresar/registrarse
   $("#login-signup-submit-btn").click(function(event) {
     $(".login-signup-input").each(function() {
       if ($(this).val() == "") {
-        $(this).next("button").show();
+        $(this).next("a").show();
         $(this).css("background-color", "#E6E6E6");
       }
     });
