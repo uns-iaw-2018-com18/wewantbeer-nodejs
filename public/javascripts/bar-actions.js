@@ -18,28 +18,39 @@ function mostrarPuntaje() {
   var initialLocalRating = localStorage.getItem("rating_" + id);
   var totalRating = calculateRating(initialLocalRating);
 
-  $("#fontawesome-rating").barrating({
-      theme: "fontawesome-stars",
-      showSelectedRating: false,
-      deselectable: false,
-      allowEmpty: true,
-      initialRating: totalRating,
-      onSelect: function(value, text, event) {
-        if (typeof(event) !== "undefined") {
-          var data = {"id": id, "rating": value};
-          $.post("/api/rate", data);
+  if (username) {
+    $("#fontawesome-rating").barrating({
+        theme: "fontawesome-stars",
+        showSelectedRating: false,
+        deselectable: false,
+        allowEmpty: true,
+        initialRating: totalRating,
+        onSelect: function(value, text, event) {
+          if (typeof(event) !== "undefined") {
+            var data = {"id": id, "rating": value};
+            $.post("/api/rate", data);
 
-          var toShow = calculateRating(value);
-          localStorage.setItem("rating_" + id, value);
-          $("#info-rating-number").html(toShow);
-          $("#fontawesome-rating").barrating("readonly", true);
-          $("#fontawesome-rating").barrating("set", toShow);
-          $("#user-rating-value").html(value);
-          $("#user-rating").show();
-          $("#delete-user-rating").show();
+            var toShow = calculateRating(value);
+            localStorage.setItem("rating_" + id, value);
+            $("#info-rating-number").html(toShow);
+            $("#fontawesome-rating").barrating("readonly", true);
+            $("#fontawesome-rating").barrating("set", toShow);
+            $("#user-rating-value").html(value);
+            $("#user-rating").show();
+            $("#delete-user-rating").show();
+        }
       }
-    }
-  });
+    });
+  } else {
+    $("#fontawesome-rating").barrating({
+        theme: "fontawesome-stars",
+        showSelectedRating: false,
+        deselectable: false,
+        allowEmpty: true,
+        readonly: true,
+        initialRating: totalRating
+    });
+  }
 
   $("#info-rating-number").html(totalRating);
   if (initialLocalRating != null) {

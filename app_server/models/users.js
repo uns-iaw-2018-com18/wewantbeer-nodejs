@@ -30,6 +30,8 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-userSchema.plugin(passportLocalMongoose, {selectFields:"username email"});
+userSchema.plugin(passportLocalMongoose, {
+  selectFields: "username email"
+});
 
 module.exports = mongoose.model('users', userSchema);

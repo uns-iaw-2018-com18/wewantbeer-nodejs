@@ -9,6 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bar-rating/1.2.2/jquery.barrating.min.js" integrity="sha256-4G5fW5q6We2bsDSgLCwkfKMFvGx/SbRsZkiNZbhXCvM=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.1.10/libphonenumber-js.min.js" integrity="sha256-VC6fos/EGeOe0Jt2Od78OU6mk0scUd6gCdojMcRpiIo=" crossorigin="anonymous"></script>
   <script>
+    var username = '{{ user.username }}';
     var telefono = '{{ cerveza.telefono }}';
     var cantidadPuntajes = '{{cerveza.cantidadPuntajes}}';
     var sumaPuntajes = '{{cerveza.sumaPuntajes}}';
@@ -42,7 +43,11 @@
   <div id="info-container">
     <div id="rating-container">
       <span id="info-rating-number"></span>
-      <form id="rating-form" data-toggle="tooltip" data-placement="bottom" title="Requiere ingresar para puntuar">
+      {% if user %}
+        <form id="rating-form">
+      {% else %}
+        <form id="rating-form" data-toggle="tooltip" data-placement="bottom" title="Ingresá para puntuar">
+      {% endif %}
         <select id="fontawesome-rating" name="rating" autocomplete="off">
           <option value=""></option>
           <option value="1">1</option>

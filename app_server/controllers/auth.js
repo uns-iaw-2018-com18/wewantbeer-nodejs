@@ -32,7 +32,7 @@ const logout = function(req, res) {
   res.redirect('/');
 };
 
-//Controladores de las redes sociales
+// Controladores de las redes sociales
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.use(new GoogleStrategy({
 	    clientID: "883057773753-94nj4230rhpo58hdiettsru28rfc0tmi.apps.googleusercontent.com",
@@ -70,7 +70,7 @@ passport.use(new GoogleStrategy({
 								throw err;
 							return done(null, newUser);
 						})
-						console.log(profile);
+						// console.log(profile);
 					}
 				});
 			});
@@ -90,11 +90,10 @@ const google = passport.authenticate('google', {scope:['profile','email']});
 
 const googleAuth =passport.authenticate('google', {failureRedirect: '/login'});
 
-const googleCallback =
-  function(req, res) {
-    console.log(req.user);
+const googleCallback = function(req, res) {
+    // console.log(req.user);
     res.redirect('/');
 };
 
 
-module.exports = {getSignup, signup, getLogin, login, logout, google, googleAuth,googleCallback};
+module.exports = {getSignup, signup, getLogin, login, logout, google, googleAuth, googleCallback};
