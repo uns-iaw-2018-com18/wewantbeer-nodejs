@@ -1,13 +1,19 @@
 var passport = require('passport');
 var User = require('../models/users');
+var flash = require('connect-flash');
 
 const getSignup = function(req, res) {
   if (req.user) {
     res.redirect('/');
   } else {
-    res.render('signup');
+    res.render('signup', {signError : req.flash('signError')});
   }
 };
+
+function validateEmail(email) {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
 
 var LocalStrategy = require('passport-local').Strategy;
 passport.use('local-signup', new LocalStrategy({
@@ -19,13 +25,15 @@ passport.use('local-signup', new LocalStrategy({
 				if(err)
 					return done(err);
 				if(user){
-          if(user.username == undefined){
-            user.username = username;
-            user.password = user.generateHash(password);
-            user.save();
-          }
-					return done(null, user);
+          //Quiere decir que ya existe una cuenta con ese email
+					return done(null, false,req.flash('signError','Ya existe una cuenta con ese email'));
 				} else {
+          if(req.body.confirmPassword != password){
+            return done(null, false, req.flash('signError','Confirmar contraseña no es igual a la contraseña'));
+          }
+          if(!validateEmail(req.body.email)){
+            return done(null,false, req.flash('signError','El email no tiene un formato válido'));
+          }
 					var newUser = new User();
           newUser.email = req.body.email;
 					newUser.username = username;
@@ -46,20 +54,16 @@ passport.use('local-signup', new LocalStrategy({
   	},
   	function(req, username, password, done){
   		process.nextTick(function(){
-  			User.findOne({'username': username}, function(err, user){
+  			User.findOne({'email': username}, function(err, user){
   				if(err){
-            console.log("entro aca 4");
   					return done(err);
             }
           if(!user){
-            console.log("entro aca");
-            return done(null,false);
+            return done(null,false,req.flash('loginError','El mail no existe'));
           }
           if(!user.validPassword(password)){
-            console.log("entro aca 2")
-            return done(null, false );
+            return done(null, false, req.flash('loginError','El password es inválido'));
   				}
-            console.log("entro aca 3");
   					return done(null, user);
   			});
 
@@ -76,7 +80,7 @@ const getLogin = function(req, res) {
   if (req.user) {
     res.redirect('/');
   } else {
-    res.render('login');
+    res.render('login',{'loginError': req.flash('loginError')});
   }
 };
 

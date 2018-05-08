@@ -12,7 +12,7 @@ const userRouter = require('./app_server/routes/users');
 const apiRouter = require('./app_server/routes/api');
 const authRouter = require('./app_server/routes/auth');
 const app = express();
-
+const flash = require('connect-flash');
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server','views'));
 app.set('view engine', 'twig');
@@ -33,6 +33,7 @@ app.use(require('express-session')({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/users', userRouter);
