@@ -1,25 +1,26 @@
 const mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const passportLocalMongoose = require('passport-local-mongoose');
 const userSchema = new mongoose.Schema({
-  email:{
+  username: String,
+  password: String,
+  email: {
     type: String,
     unique: true
   },
-  username:String,
-  style:{
+  style: {
     type: Number,
     default: 0
   },
   rating: [{
     bar: String,
-    rate: Number
+    count: Number,
+    _id: false
   }],
-  password: String,
   google: {
     id: String,
     token: String,
-    name: {givenName:String, familyName:String}
+    name: {givenName: String, familyName: String}
   },
   facebook: {
     id: String,
@@ -32,11 +33,11 @@ userSchema.plugin(passportLocalMongoose, {
   selectFields: "username email"
 });
 
-userSchema.methods.generateHash = function(password){
+userSchema.methods.generateHash = function(password) {
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(9));
 }
 
-userSchema.methods.validPassword = function(password){
+userSchema.methods.validPassword = function(password) {
 	return bcrypt.compareSync(password, this.password);
 }
 

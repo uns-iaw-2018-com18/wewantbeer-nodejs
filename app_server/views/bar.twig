@@ -9,8 +9,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bar-rating/1.2.2/jquery.barrating.min.js" integrity="sha256-4G5fW5q6We2bsDSgLCwkfKMFvGx/SbRsZkiNZbhXCvM=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.1.10/libphonenumber-js.min.js" integrity="sha256-VC6fos/EGeOe0Jt2Od78OU6mk0scUd6gCdojMcRpiIo=" crossorigin="anonymous"></script>
   <script>
-    var username = '{{ user.username }}';
-    var telefono = '{{ cerveza.telefono }}';
+    var username = '{{user.username}}';
+    var myRating = '{{myRating}}';
+    var telefono = '{{cerveza.telefono}}';
     var cantidadPuntajes = '{{cerveza.cantidadPuntajes}}';
     var sumaPuntajes = '{{cerveza.sumaPuntajes}}';
     var id = '{{cerveza.id}}';
@@ -21,7 +22,7 @@
 {% block buttons %}
   <div id="top-navbar">
     {% if user %}
-      <a id="login-btn" href="/logout">{{ user.username }}
+      <a id="login-btn" href="/logout">
         {% if user.username  %}
             {{user.username}}
         {% elseif user.google.name.givenName  %}
@@ -112,6 +113,7 @@
 {% endblock %}
 
 {% block bodyscript %}
+  <link rel="stylesheet" href="/stylesheets/rating-tooltip.css">
   <div id="mapcoords" data-lat="{{cerveza.latLong[0]}}" data-lng="{{cerveza.latLong[1]}}">
     <script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UheGSM6zHbQvf0MU5zSrdZNJCdMrZoQ&callback=initMap'></script>
   </div>

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Cervecerias = mongoose.model('Cervecerias');
+const users = mongoose.model('users');
 
 const index = function(req, res) {
   res.render('index', {user: req.user});
@@ -7,10 +8,20 @@ const index = function(req, res) {
 
 const bar = function(req, res) {
   Cervecerias.findOne({'id': req.params.id}).exec((err, cerveza) => {
-      if(err || cerveza == null){
+      if (err || cerveza == null) {
         res.render('notfound', {user: req.user, search: req.params.id});
-      }else{
-        res.render('bar', {user: req.user, cerveza: cerveza, horarios: horario(cerveza)});
+      } else {
+        if (req.user) {
+          users.findOne({"_id": req.user._id}, {"rating": {$elemMatch: {"bar": req.params.id}}}).exec((err, result) => {
+            if (err || result.rating === undefined || result.rating.length == 0) {
+              res.render('bar', {user: req.user, myRating: 0, cerveza: cerveza, horarios: horario(cerveza)});
+            } else {
+              res.render('bar', {user: req.user, myRating: Number(result.rating[0].count), cerveza: cerveza, horarios: horario(cerveza)});
+            }
+          });
+        } else {
+          res.render('bar', {user: req.user, cerveza: cerveza, horarios: horario(cerveza)});
+        }
       }
     })
 };

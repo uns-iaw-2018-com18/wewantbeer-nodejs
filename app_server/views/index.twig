@@ -17,7 +17,7 @@
 {% block buttons %}
   <div id="top-navbar">
     {% if user %}
-    <a id="login-btn" href="/logout">{{ user.username }}
+    <a id="login-btn" href="/logout">
       {% if user.username  %}
           {{user.username}}
       {% elseif user.google.name.givenName  %}

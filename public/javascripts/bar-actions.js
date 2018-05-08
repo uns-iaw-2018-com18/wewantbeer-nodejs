@@ -15,8 +15,8 @@ $(function() {
 });
 
 function mostrarPuntaje() {
-  var initialLocalRating = localStorage.getItem("rating_" + id);
-  var totalRating = calculateRating(initialLocalRating);
+  var totalRating = calculateRating();
+  $("#info-rating-number").html(totalRating);
 
   if (username) {
     $("#fontawesome-rating").barrating({
@@ -27,11 +27,13 @@ function mostrarPuntaje() {
         initialRating: totalRating,
         onSelect: function(value, text, event) {
           if (typeof(event) !== "undefined") {
-            var data = {"id": id, "rating": value};
+            // Enviar el valor a agregar al servidor
+            var data = {"bar": id, "count": value};
             $.post("/api/rate", data);
 
-            var toShow = calculateRating(value);
-            localStorage.setItem("rating_" + id, value);
+            // Actualizar valor en el cliente
+            myRating = value;
+            var toShow = recalculateRating(1);
             $("#info-rating-number").html(toShow);
             $("#fontawesome-rating").barrating("readonly", true);
             $("#fontawesome-rating").barrating("set", toShow);
@@ -41,6 +43,13 @@ function mostrarPuntaje() {
         }
       }
     });
+
+    if (myRating != 0) {
+      $("#fontawesome-rating").barrating("readonly", true);
+      $("#user-rating-value").html(myRating);
+      $("#user-rating").show();
+      $("#delete-user-rating").show();
+    }
   } else {
     $("#fontawesome-rating").barrating({
         theme: "fontawesome-stars",
@@ -51,40 +60,45 @@ function mostrarPuntaje() {
         initialRating: totalRating
     });
   }
-
-  $("#info-rating-number").html(totalRating);
-  if (initialLocalRating != null) {
-    $("#fontawesome-rating").barrating("readonly", true);
-    $("#user-rating-value").html(initialLocalRating);
-    $("#user-rating").show();
-    $("#delete-user-rating").show();
-  }
 }
 
-function calculateRating(localRating) {
+function calculateRating() {
   var rating = 0;
-  var usersThatRated = cantidadPuntajes;
-  var ratingSum = sumaPuntajes;
-  if (localRating != null) {
-    usersThatRated += 1;
-    ratingSum += Number(localRating);
+  if (cantidadPuntajes > 0) {
+    rating = Math.round(sumaPuntajes / cantidadPuntajes);
   }
-  if (usersThatRated > 0) {
-    rating = Math.round(ratingSum / usersThatRated);
+  return rating;
+}
+
+// Requiere modificar antes el valor de myRating para rate
+// Y requiere modificarlo despues para unrate
+function recalculateRating(rate) {
+  var rating = 0;
+  if (rate) {
+    cantidadPuntajes = Number(cantidadPuntajes) + 1;
+    sumaPuntajes = Number(sumaPuntajes) + Number(myRating);
+  } else {
+    cantidadPuntajes = Number(cantidadPuntajes) - 1;
+    sumaPuntajes = Number(sumaPuntajes) - Number(myRating);
+  }
+  if (cantidadPuntajes > 0) {
+    rating = Math.round(sumaPuntajes / cantidadPuntajes);
   }
   return rating;
 }
 
 $(function() {
   $("#delete-user-rating").click(function() {
-    var data = {"id": id, "rating": localStorage.getItem("rating_" + id)};
+    // Enviar el valor a eliminar al servidor
+    var data = {"bar": id, "count": myRating};
     $.post("/api/unrate", data);
 
-    var toShow = calculateRating(undefined);
-    localStorage.removeItem("rating_" + id);
+    // Actualizar valor en el cliente
+    var toShow = recalculateRating(0);
+    myRating = 0;
     $("#user-rating").hide();
     if (toShow == 0) {
-      $("#fontawesome-rating").barrating("clear");
+      $("#fontawesome-rating").barrating("set", ""); // Clear no funcionaba bien
     } else {
       $("#fontawesome-rating").barrating("set", toShow);
     }
