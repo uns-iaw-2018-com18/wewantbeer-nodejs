@@ -13,5 +13,6 @@ router.get('/logout', auth.logout);
 
 router.get('/auth/google',auth.google);
 router.get('/auth/google/callback',auth.googleAuth,auth.googleCallback);
-
+router.get('/auth/facebook',auth.facebook);
+router.get('/auth/facebook/callback',auth.facebookAuth,auth.facebookCallback);
 module.exports = router;

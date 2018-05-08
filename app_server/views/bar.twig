@@ -21,7 +21,15 @@
 {% block buttons %}
   <div id="top-navbar">
     {% if user %}
-      <a id="login-btn" href="/logout">{{ user.username }}</a>
+      <a id="login-btn" href="/logout">{{ user.username }}
+        {% if user.username  %}
+            {{user.username}}
+        {% elseif user.google.name.givenName  %}
+            {{user.google.name.givenName}}
+        {% elseif user.facebook.name.givenName  %}
+            {{user.facebook.name.givenName}}
+        {% endif %}
+      </a>
     {% else %}
       <a id="login-btn" href="/login">Ingresar</a>
     {% endif %}
