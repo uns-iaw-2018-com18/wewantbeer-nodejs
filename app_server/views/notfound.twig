@@ -1,5 +1,12 @@
 {% extends 'layout.twig' %}
 
+{% block javascript %}
+  <script>
+    var username = '{{user.username}}';
+    var myStyle = '{{user.style}}';
+  </script>
+{% endblock %}
+
 {% block buttons %}
   <div id="top-navbar">
     {% if user %}

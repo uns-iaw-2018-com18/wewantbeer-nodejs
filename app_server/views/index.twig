@@ -10,6 +10,10 @@
 
 {% block javascript %}
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+  <script>
+    var username = '{{user.username}}';
+    var myStyle = '{{user.style}}';
+  </script>
   <script src="/javascripts/index-actions.js"></script>
   <script src="/javascripts/search.js"></script>
 {% endblock %}

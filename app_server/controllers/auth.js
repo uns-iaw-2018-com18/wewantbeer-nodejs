@@ -2,8 +2,13 @@ var passport = require('passport');
 var User = require('../models/users');
 
 const getSignup = function(req, res) {
-  res.render('signup');
+  if (req.user) {
+    res.redirect('/');
+  } else {
+    res.render('signup');
+  }
 };
+
 var LocalStrategy = require('passport-local').Strategy;
 passport.use('local-signup', new LocalStrategy({
 		passReqToCallback: true
@@ -65,12 +70,14 @@ passport.use('local-signup', new LocalStrategy({
 const signup = passport.authenticate('local-signup', {
 		successRedirect: '/',
 		failureRedirect: '/signup'
-	});
-
-
+});
 
 const getLogin = function(req, res) {
-  res.render('login', { user: req.user });
+  if (req.user) {
+    res.redirect('/');
+  } else {
+    res.render('login');
+  }
 };
 
 const login = passport.authenticate('local-login', {
@@ -120,8 +127,7 @@ passport.use(new GoogleStrategy({
 					}
 				});
 			});
-	    }
-
+    }
 ));
 
 const FacebookStrategy = require('passport-facebook').Strategy;
@@ -159,10 +165,8 @@ passport.use(new FacebookStrategy({
 					}
 				});
 			});
-	    }
-
+    }
 ));
-
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -183,9 +187,8 @@ const googleCallback = function(req, res) {
 
 const facebook = passport.authenticate('facebook', {scope:['profile','email']});
 const facebookAuth = passport.authenticate('facebook', {failureRedirect: '/login'});
-const facebookCallback = function (req, res){
-  res.redirect('/')
+const facebookCallback = function (req, res) {
+  res.redirect('/');
 }
 
-
-module.exports = {getSignup, signup, getLogin, login, logout, google, googleAuth, googleCallback,facebook, facebookAuth, facebookCallback};
+module.exports = {getSignup, signup, getLogin, login, logout, google, googleAuth, googleCallback, facebook, facebookAuth, facebookCallback};
