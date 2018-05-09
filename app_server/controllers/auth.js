@@ -214,7 +214,7 @@ const googleCallback = function(req, res) {
     res.redirect('/');
 };
 
-const facebook = passport.authenticate('facebook', {scope:['profile','email']});
+const facebook = passport.authenticate('facebook', {scope:['email']});
 
 const facebookAuth = passport.authenticate('facebook', {failureRedirect: '/login'});
 
