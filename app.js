@@ -9,7 +9,6 @@ const morgan = require('morgan');
 require('./app_server/models/db');
 
 const indexRouter = require('./app_server/routes/index');
-const userRouter = require('./app_server/routes/users');
 const apiRouter = require('./app_server/routes/api');
 const authRouter = require('./app_server/routes/auth');
 const app = express();
@@ -38,7 +37,6 @@ app.use(passport.session());
 app.use(flash());
 
 app.use('/', indexRouter);
-app.use('/users', userRouter);
 app.use('/api', apiRouter);
 app.use('/', authRouter);
 

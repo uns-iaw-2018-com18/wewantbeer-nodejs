@@ -51,7 +51,6 @@ $(function () {
         } else {
           $("#main-container").prepend("<span class='login-signup-error-message'>El correo electrónico no tiene un formato válido</span>");
         }
-        $("#signup-form").find("input[name='email']").css("background-color", "#E6E6E6");
         return false;
       }
       // Contraseña y confirmacion de contraseña no coinciden
@@ -61,8 +60,6 @@ $(function () {
         } else {
           $("#main-container").prepend("<span class='login-signup-error-message'>Las contraseñas no coinciden</span>");
         }
-        $("#signup-form").find("input[name='password']").css("background-color", "#E6E6E6");
-        $("#signup-form").find("input[name='confirmPassword']").css("background-color", "#E6E6E6");
         return false;
       }
     }

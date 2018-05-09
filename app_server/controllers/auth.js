@@ -2,13 +2,15 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/users');
 var flash = require('connect-flash');
+const queryString = require('query-string');
 
 /* GET signup */
 const getSignup = function(req, res) {
   if (req.user) {
     res.redirect('/');
   } else {
-    res.render('signup', {user: req.user, signupError: req.flash('signupError')});
+    var redirect = queryString.parseUrl(req.url).query.redirect;
+    res.render('signup', {user: req.user, redirect: redirect, signupError: req.flash('signupError')});
   }
 };
 
@@ -91,7 +93,6 @@ passport.use('local-login', new LocalStrategy({
 );
 
 const signup = passport.authenticate('local-signup', {
-		successRedirect: '/',
 		failureRedirect: '/signup'
 });
 
@@ -100,18 +101,23 @@ const getLogin = function(req, res) {
   if (req.user) {
     res.redirect('/');
   } else {
-    res.render('login', {user: req.user, loginError: req.flash('loginError')});
+    var redirect = queryString.parseUrl(req.url).query.redirect;
+    res.render('login', {user: req.user, redirect: redirect, loginError: req.flash('loginError')});
   }
 };
 
 const login = passport.authenticate('local-login', {
-		successRedirect: '/',
 		failureRedirect: '/login'
 });
 
 const logout = function(req, res) {
   req.logout();
-  res.redirect('/');
+  var redirect = queryString.parseUrl(req.url).query.redirect;
+  if (redirect != undefined) {
+    res.redirect(redirect);
+  } else {
+    res.redirect('/');
+  }
 };
 
 // Controladores de las redes sociales

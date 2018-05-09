@@ -22,7 +22,7 @@
 {% block buttons %}
   <div id="top-navbar">
     {% if user %}
-      <a id="login-btn" href="/logout">
+      <a id="login-btn" href="/logout?redirect=/bar/{{cerveza.id}}">
         {% if user.nickname %}
             {{user.nickname}}
         {% elseif user.google.name.givenName %}
@@ -32,7 +32,7 @@
         {% endif %}
       </a>
     {% else %}
-      <a id="login-btn" href="/login">Ingresar</a>
+      <a id="login-btn" href="/login?redirect=/bar/{{cerveza.id}}">Ingresar</a>
     {% endif %}
     <label id="style-toggle-switch">
       <input id="switch-checkbox" type="checkbox" checked="checked">
