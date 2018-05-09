@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const morgan = require('morgan');
 require('./app_server/models/db');
 
 const indexRouter = require('./app_server/routes/index');
@@ -40,8 +41,6 @@ app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/api', apiRouter);
 app.use('/', authRouter);
-
-const morgan = require('morgan');
 
 // Quiero usar morgan
 app.use(morgan('tiny'));

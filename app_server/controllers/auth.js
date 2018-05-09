@@ -1,4 +1,5 @@
 var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/users');
 var flash = require('connect-flash');
 
@@ -10,8 +11,6 @@ const getSignup = function(req, res) {
     res.render('signup', {user: req.user, signupError: req.flash('signupError')});
   }
 };
-
-var LocalStrategy = require('passport-local').Strategy;
 
 passport.use('local-signup', new LocalStrategy({
     usernameField: 'email',
@@ -36,16 +35,19 @@ passport.use('local-signup', new LocalStrategy({
           if (!validateEmail(email)) {
             return done(null, false, req.flash('signupError', 'El correo electrónico no tiene un formato válido'));
           }
-					var newUser = new User();
-          newUser.email = email;
-					newUser.nickname = req.body.nickname;
-					newUser.password = newUser.generateHash(password);
-					newUser.save(function(err) {
-						if (err) {
-							throw err;
+
+					var newUser = new User({
+            email: email,
+            nickname: req.body.nickname,
+            password: password
+          });
+
+          User.createUser(newUser, function(err, user) {
+            if (err) {
+              throw err;
             }
-						return done(null, newUser);
-					})
+            return done(null, newUser);
+          });
 				}
 			})
 		});
@@ -72,11 +74,17 @@ passport.use('local-login', new LocalStrategy({
           // El usuario no existe
           return done(null, false, req.flash('loginError', 'El usuario y la contraseña no coinciden'));
         }
-        if (!user.validPassword(password)) {
-          // La contraseña es invalida
-          return done(null, false, req.flash('loginError', 'El usuario y la contraseña no coinciden'));
-				}
-					return done(null, user);
+        User.comparePassword(password, user.password, function(err, isMatch) {
+          if (err) {
+            throw err;
+          }
+          if (isMatch) {
+            return done(null, user);
+          } else {
+            // La contraseña es invalida
+            return done(null, false, req.flash('loginError', 'El usuario y la contraseña no coinciden'));
+          }
+        });
 			});
 		});
 	})

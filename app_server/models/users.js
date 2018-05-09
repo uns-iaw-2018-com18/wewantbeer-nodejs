@@ -28,12 +28,22 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-userSchema.methods.generateHash = function(password) {
-	return bcrypt.hashSync(password, bcrypt.genSaltSync(9));
-}
-
-userSchema.methods.validPassword = function(password) {
-	return bcrypt.compareSync(password, this.password);
-}
-
 module.exports = mongoose.model('users', userSchema);
+
+module.exports.createUser = function(newUser, callback) {
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(newUser.password, salt, function(err, hash) {
+        newUser.password = hash;
+        newUser.save(callback);
+    });
+  });
+}
+
+module.exports.comparePassword = function(candidatePassword, hash, callback) {
+  bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
+    if (err) {
+      throw err;
+    }
+    callback(null, isMatch);
+  });
+}
