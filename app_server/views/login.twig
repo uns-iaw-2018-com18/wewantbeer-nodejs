@@ -13,6 +13,9 @@
 {% endblock %}
 
 {% block info %}
+  {% if loginError %}
+  <span class="login-signup-error-message">{{loginError}}</span>
+  {% endif %}
   <form id="login-form" action="login" method="post">
     <input class="login-signup-input" type="text" name="email" placeholder="Correo electrónico" maxlength="32">
     <a class="input-warning-icon" href="#" data-toggle="tooltip" data-placement="left" title="Correo electrónico requerido"></a>
@@ -23,9 +26,6 @@
   <span class="login-signup-text">¿No tenés cuenta? <a class="login-signup-btn" href="/signup">Registrate</a></span>
   <button id="facebook-login-signup" class="social-login-signup-btn" onClick="location.href='/auth/facebook'">Ingresar con Facebook</button>
   <button id="google-login-signup" class="social-login-signup-btn" onClick="location.href='/auth/google'">Ingresar con Google</button>
-  {% if loginError %}
-  <span>Error: {{loginError}}</span>
-  {% endif %}
 {% endblock %}
 
 {% block bodyscript %}

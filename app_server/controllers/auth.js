@@ -6,7 +6,7 @@ const getSignup = function(req, res) {
   if (req.user) {
     res.redirect('/');
   } else {
-    res.render('signup', {user: req.user, signError: req.flash('signError')});
+    res.render('signup', {user: req.user, signupError: req.flash('signupError')});
   }
 };
 
@@ -30,13 +30,15 @@ passport.use('local-signup', new LocalStrategy({
         }
 				if (user) {
           // Quiere decir que ya existe una cuenta con ese email
-					return done(null, false, req.flash('signError', 'Ya existe una cuenta con ese email'));
+					return done(null, false, req.flash('signupError', 'Ya existe un usuario con ese correo electrónico'));
 				} else {
+          // La contraseña y la confirmacion de contraseña no coinciden
           if (req.body.confirmPassword != password) {
-            return done(null, false, req.flash('signError', 'Confirmar contraseña no es igual a la contraseña'));
+            return done(null, false, req.flash('signupError', 'Las contraseñas no coinciden'));
           }
+          // El email no tiene un formato valido
           if (!validateEmail(req.body.email)) {
-            return done(null, false, req.flash('signError', 'El email no tiene un formato válido'));
+            return done(null, false, req.flash('signupError', 'El correo electrónico no tiene un formato válido'));
           }
 					var newUser = new User();
           newUser.email = email;
@@ -66,10 +68,12 @@ passport.use('local-login', new LocalStrategy({
 					return done(err);
         }
         if (!user) {
-          return done(null, false, req.flash('loginError', 'El mail no existe'));
+          // El usuario no existe
+          return done(null, false, req.flash('loginError', 'El usuario y la contraseña no coinciden'));
         }
         if (!user.validPassword(password)) {
-          return done(null, false, req.flash('loginError', 'El password es inválido'));
+          // La contraseña es invalida
+          return done(null, false, req.flash('loginError', 'El usuario y la contraseña no coinciden'));
 				}
 					return done(null, user);
 			});

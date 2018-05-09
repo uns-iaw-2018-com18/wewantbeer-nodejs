@@ -624,6 +624,12 @@ input {
   float: left;
 }
 
+.login-signup-error-message {
+  display: block;
+  margin: 5px 10px;
+  font-size: 24px;
+}
+
 /* Modal */
 
 #modal-bg {
