@@ -6,14 +6,17 @@
 
 {% block javascript %}
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+  <script>
+    var myStyle = '{{user.style}}';
+  </script>
   <script src="/javascripts/login-signup-actions.js"></script>
 {% endblock %}
 
 {% block info %}
   <form id="login-form" action="login" method="post">
-    <input class="login-signup-input" type="text" name="username" placeholder="Usuario" maxlength="64">
-    <a class="input-warning-icon" href="#" data-toggle="tooltip" data-placement="left" title="Usuario requerido"></a>
-    <input class="login-signup-input" type="password" name="password" placeholder="Contraseña" maxlength="64">
+    <input class="login-signup-input" type="text" name="email" placeholder="Correo electrónico" maxlength="32">
+    <a class="input-warning-icon" href="#" data-toggle="tooltip" data-placement="left" title="Correo electrónico requerido"></a>
+    <input class="login-signup-input" type="password" name="password" placeholder="Contraseña" maxlength="32">
     <a class="input-warning-icon" href="#" data-toggle="tooltip" data-placement="left" title="Contraseña requerida"></a>
     <input id="login-signup-submit-btn" type="submit" value="Ingresar">
   </form>

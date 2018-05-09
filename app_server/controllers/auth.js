@@ -6,7 +6,7 @@ const getSignup = function(req, res) {
   if (req.user) {
     res.redirect('/');
   } else {
-    res.render('signup', {signError : req.flash('signError')});
+    res.render('signup', {user: req.user, signError: req.flash('signError')});
   }
 };
 
@@ -16,59 +16,66 @@ function validateEmail(email) {
 }
 
 var LocalStrategy = require('passport-local').Strategy;
+
 passport.use('local-signup', new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
 		passReqToCallback: true
 	},
-	function(req, username, password, done){
-		process.nextTick(function(){
-			User.findOne({'email': req.body.email}, function(err, user){
-				if(err)
+	function(req, email, password, done) {
+		process.nextTick(function() {
+			User.findOne({'email': req.body.email}, function(err, user) {
+				if (err) {
 					return done(err);
-				if(user){
-          //Quiere decir que ya existe una cuenta con ese email
-					return done(null, false,req.flash('signError','Ya existe una cuenta con ese email'));
+        }
+				if (user) {
+          // Quiere decir que ya existe una cuenta con ese email
+					return done(null, false, req.flash('signError', 'Ya existe una cuenta con ese email'));
 				} else {
-          if(req.body.confirmPassword != password){
-            return done(null, false, req.flash('signError','Confirmar contraseña no es igual a la contraseña'));
+          if (req.body.confirmPassword != password) {
+            return done(null, false, req.flash('signError', 'Confirmar contraseña no es igual a la contraseña'));
           }
-          if(!validateEmail(req.body.email)){
-            return done(null,false, req.flash('signError','El email no tiene un formato válido'));
+          if (!validateEmail(req.body.email)) {
+            return done(null, false, req.flash('signError', 'El email no tiene un formato válido'));
           }
 					var newUser = new User();
-          newUser.email = req.body.email;
-					newUser.username = username;
+          newUser.email = email;
+					newUser.nickname = req.body.nickname;
 					newUser.password = newUser.generateHash(password);
-					newUser.save(function(err){
-						if(err)
+					newUser.save(function(err) {
+						if (err) {
 							throw err;
+            }
 						return done(null, newUser);
 					})
 				}
 			})
-
 		});
-	}));
+	})
+);
 
-  passport.use('local-login', new LocalStrategy({
-  		passReqToCallback: true
-  	},
-  	function(req, username, password, done){
-  		process.nextTick(function(){
-  			User.findOne({'email': username}, function(err, user){
-  				if(err){
-  					return done(err);
-            }
-          if(!user){
-            return done(null,false,req.flash('loginError','El mail no existe'));
-          }
-          if(!user.validPassword(password)){
-            return done(null, false, req.flash('loginError','El password es inválido'));
-  				}
-  					return done(null, user);
-  			});
-
-  		});
-  	}));
+passport.use('local-login', new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+		passReqToCallback: true
+	},
+	function(req, email, password, done) {
+		process.nextTick(function() {
+			User.findOne({'email': email}, function(err, user) {
+				if (err) {
+					return done(err);
+        }
+        if (!user) {
+          return done(null, false, req.flash('loginError', 'El mail no existe'));
+        }
+        if (!user.validPassword(password)) {
+          return done(null, false, req.flash('loginError', 'El password es inválido'));
+				}
+					return done(null, user);
+			});
+		});
+	})
+);
 
 
 const signup = passport.authenticate('local-signup', {
@@ -80,7 +87,7 @@ const getLogin = function(req, res) {
   if (req.user) {
     res.redirect('/');
   } else {
-    res.render('login',{'loginError': req.flash('loginError')});
+    res.render('login', {user: req.user, loginError: req.flash('loginError')});
   }
 };
 
@@ -180,7 +187,7 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-const google = passport.authenticate('google', {scope:['profile','email']});
+const google = passport.authenticate('google', {scope: ['profile', 'email']});
 
 const googleAuth = passport.authenticate('google', {failureRedirect: '/login'});
 

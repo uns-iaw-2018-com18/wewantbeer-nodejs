@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const passportLocalMongoose = require('passport-local-mongoose');
 const userSchema = new mongoose.Schema({
-  username: String,
+  nickname: String,
   password: String,
   email: {
     type: String,

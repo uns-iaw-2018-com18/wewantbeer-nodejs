@@ -18,7 +18,7 @@ function mostrarPuntaje() {
   var totalRating = calculateRating();
   $("#info-rating-number").html(totalRating);
 
-  if (username) {
+  if (myRating) {
     $("#fontawesome-rating").barrating({
         theme: "fontawesome-stars",
         showSelectedRating: false,

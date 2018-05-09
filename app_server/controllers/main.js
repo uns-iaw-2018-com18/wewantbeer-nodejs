@@ -3,26 +3,22 @@ const Cervecerias = mongoose.model('Cervecerias');
 const users = mongoose.model('users');
 
 const index = function(req, res) {
-  if(req.user){
-    users.findOne({'_id': req.user._id}).exec((err,usuario)=>{
+  if (req.user) {
+    users.findOne({'_id': req.user._id}).exec((err, usuario) => {
         res.render('index', {user: usuario});
     })
-  }else{
-    res.render('index',{user:req.user});
+  } else {
+    res.render('index', {user: req.user});
   }
-
 };
 
-
-
 const bar = function(req, res) {
-  var user=req.user;
-  if(req.user){
-    users.findOne({'_id': req.user._id}).exec((err,usuario)=>{
-        user=usuario;
+  var user = req.user;
+  if (req.user) {
+    users.findOne({'_id': req.user._id}).exec((err, usuario) => {
+        user = usuario;
     })
   }
-
   Cervecerias.findOne({'id': req.params.id}).exec((err, cerveza) => {
       if (err || cerveza == null) {
         res.render('notfound', {user: user, search: req.params.id});
@@ -51,7 +47,6 @@ function horario(cerveceria) {
     var day = (hoy + 1) % 7;
     while(day != hoy) {
       toRet.push(weekdays[day] + " " + cerveceria.horario[day])
-      //$("#hidden-days-list").append("<div>" + weekdays[day] + " " + cerveceria.horario[day] + "</div>");
       day = (day + 1) % 7;
     }
   }

@@ -11,7 +11,6 @@
 {% block javascript %}
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
   <script>
-    var username = '{{user.username}}';
     var myStyle = '{{user.style}}';
   </script>
   <script src="/javascripts/index-actions.js"></script>
@@ -21,15 +20,15 @@
 {% block buttons %}
   <div id="top-navbar">
     {% if user %}
-    <a id="login-btn" href="/logout">
-      {% if user.username  %}
-          {{user.username}}
-      {% elseif user.google.name.givenName  %}
-          {{user.google.name.givenName}}
-      {% elseif user.facebook.name.givenName  %}
-          {{user.facebook.name.givenName}}
-      {% endif %}
-    </a>
+      <a id="login-btn" href="/logout">
+        {% if user.nickname %}
+            {{user.nickname}}
+        {% elseif user.google.name.givenName %}
+            {{user.google.name.givenName}}
+        {% elseif user.facebook.name.givenName %}
+            {{user.facebook.name.givenName}}
+        {% endif %}
+      </a>
     {% else %}
       <a id="login-btn" href="/login">Ingresar</a>
     {% endif %}

@@ -9,7 +9,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bar-rating/1.2.2/jquery.barrating.min.js" integrity="sha256-4G5fW5q6We2bsDSgLCwkfKMFvGx/SbRsZkiNZbhXCvM=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.1.10/libphonenumber-js.min.js" integrity="sha256-VC6fos/EGeOe0Jt2Od78OU6mk0scUd6gCdojMcRpiIo=" crossorigin="anonymous"></script>
   <script>
-    var username = '{{user.username}}';
     var myStyle = '{{user.style}}';
     var myRating = '{{myRating}}';
     var telefono = '{{cerveza.telefono}}';
@@ -24,11 +23,11 @@
   <div id="top-navbar">
     {% if user %}
       <a id="login-btn" href="/logout">
-        {% if user.username  %}
-            {{user.username}}
-        {% elseif user.google.name.givenName  %}
+        {% if user.nickname %}
+            {{user.nickname}}
+        {% elseif user.google.name.givenName %}
             {{user.google.name.givenName}}
-        {% elseif user.facebook.name.givenName  %}
+        {% elseif user.facebook.name.givenName %}
             {{user.facebook.name.givenName}}
         {% endif %}
       </a>
