@@ -17,15 +17,15 @@
   <span class="login-signup-error-message">{{loginError}}</span>
   {% endif %}
   <form id="login-form" action="login" method="post">
-    <input class="login-signup-input" type="text" name="email" placeholder="Correo electrónico" maxlength="32">
+    <input class="login-signup-input" type="text" name="email" placeholder="Correo electrónico" maxlength="32" autofocus="autofocus">
     <a class="input-warning-icon" href="#" data-toggle="tooltip" data-placement="left" title="Correo electrónico requerido"></a>
     <input class="login-signup-input" type="password" name="password" placeholder="Contraseña" maxlength="32">
     <a class="input-warning-icon" href="#" data-toggle="tooltip" data-placement="left" title="Contraseña requerida"></a>
     <input id="login-signup-submit-btn" type="submit" value="Ingresar">
   </form>
   <span class="login-signup-text">¿No tenés cuenta? <a class="login-signup-btn" href="/signup">Registrate</a></span>
-  <button id="facebook-login-signup" class="social-login-signup-btn" onClick="location.href='/auth/facebook'">Ingresar con Facebook</button>
-  <button id="google-login-signup" class="social-login-signup-btn" onClick="location.href='/auth/google'">Ingresar con Google</button>
+  <button id="facebook-login-signup" class="social-login-signup-btn">Ingresar con Facebook</button>
+  <button id="google-login-signup" class="social-login-signup-btn">Ingresar con Google</button>
 {% endblock %}
 
 {% block bodyscript %}

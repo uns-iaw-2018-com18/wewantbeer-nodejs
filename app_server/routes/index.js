@@ -11,10 +11,4 @@ router.get('/bar', function(req, res) {
   res.redirect('/');
 });
 
-// /* GET login */
-// router.get('/login/', ctrlMain.login);
-//
-// /* GET signup */
-// router.get('/signup/', ctrlMain.signup);
-
 module.exports = router;

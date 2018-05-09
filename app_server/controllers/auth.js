@@ -2,6 +2,7 @@ var passport = require('passport');
 var User = require('../models/users');
 var flash = require('connect-flash');
 
+/* GET signup */
 const getSignup = function(req, res) {
   if (req.user) {
     res.redirect('/');
@@ -9,11 +10,6 @@ const getSignup = function(req, res) {
     res.render('signup', {user: req.user, signupError: req.flash('signupError')});
   }
 };
-
-function validateEmail(email) {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
 
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -24,7 +20,7 @@ passport.use('local-signup', new LocalStrategy({
 	},
 	function(req, email, password, done) {
 		process.nextTick(function() {
-			User.findOne({'email': req.body.email}, function(err, user) {
+			User.findOne({'email': email}, function(err, user) {
 				if (err) {
 					return done(err);
         }
@@ -37,7 +33,7 @@ passport.use('local-signup', new LocalStrategy({
             return done(null, false, req.flash('signupError', 'Las contraseñas no coinciden'));
           }
           // El email no tiene un formato valido
-          if (!validateEmail(req.body.email)) {
+          if (!validateEmail(email)) {
             return done(null, false, req.flash('signupError', 'El correo electrónico no tiene un formato válido'));
           }
 					var newUser = new User();
@@ -55,6 +51,11 @@ passport.use('local-signup', new LocalStrategy({
 		});
 	})
 );
+
+function validateEmail(email) {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
 
 passport.use('local-login', new LocalStrategy({
     usernameField: 'email',
@@ -81,12 +82,12 @@ passport.use('local-login', new LocalStrategy({
 	})
 );
 
-
 const signup = passport.authenticate('local-signup', {
 		successRedirect: '/',
 		failureRedirect: '/signup'
 });
 
+/* GET login */
 const getLogin = function(req, res) {
   if (req.user) {
     res.redirect('/');
@@ -98,7 +99,7 @@ const getLogin = function(req, res) {
 const login = passport.authenticate('local-login', {
 		successRedirect: '/',
 		failureRedirect: '/login'
-	});
+});
 
 const logout = function(req, res) {
   req.logout();
@@ -113,11 +114,12 @@ passport.use(new GoogleStrategy({
 	    callbackURL: "http://localhost:3000/auth/google/callback"
 	  },
 	  function(accessToken, refreshToken, profile, done) {
-			process.nextTick(function(){
-				User.findOne({'email': profile.emails[0].value},function(err, user){
-					if(err)
+			process.nextTick(function() {
+				User.findOne({'email': profile.emails[0].value},function(err, user) {
+					if (err) {
 						return done(err);
-					if(user){
+          }
+					if (user) {
             if (user.google.id == undefined) {
               user.google.id = profile.id;
               user.google.token = accessToken;
@@ -126,19 +128,18 @@ passport.use(new GoogleStrategy({
               user.save();
             }
             return done(null, user);
-          }else {
+          } else {
 						var newUser = new User();
 						newUser.google.id = profile.id;
 						newUser.google.token = accessToken;
 						newUser.google.name = profile.name;
 						newUser.email = profile.emails[0].value;
-
-						newUser.save(function(err){
-							if(err)
+						newUser.save(function(err) {
+							if (err) {
 								throw err;
+              }
 							return done(null, newUser);
 						})
-						// console.log(profile);
 					}
 				});
 			});
@@ -154,9 +155,10 @@ passport.use(new FacebookStrategy({
 	  function(accessToken, refreshToken, profile, done) {
 			process.nextTick(function(){
 				User.findOne({'email': profile.emails[0].value},function(err, user){
-					if(err)
+					if (err) {
 						return done(err);
-					if(user){
+          }
+					if (user) {
             if (user.facebook.id == undefined) {
               user.facebook.id = profile.id;
               user.facebook.token = accessToken;
@@ -164,19 +166,18 @@ passport.use(new FacebookStrategy({
               user.save();
             }
             return done(null, user);
-          }else {
+          } else {
 						var newUser = new User();
 						newUser.facebook.id = profile.id;
 						newUser.facebook.token = accessToken;
 						newUser.facebook.name = profile.name;
 						newUser.email = profile.emails[0].value;
-
-						newUser.save(function(err){
-							if(err)
+						newUser.save(function(err) {
+							if (err) {
 								throw err;
+              }
 							return done(null, newUser);
 						})
-						// console.log(profile);
 					}
 				});
 			});
@@ -196,12 +197,13 @@ const google = passport.authenticate('google', {scope: ['profile', 'email']});
 const googleAuth = passport.authenticate('google', {failureRedirect: '/login'});
 
 const googleCallback = function(req, res) {
-    // console.log(req.user);
     res.redirect('/');
 };
 
 const facebook = passport.authenticate('facebook', {scope:['profile','email']});
+
 const facebookAuth = passport.authenticate('facebook', {failureRedirect: '/login'});
+
 const facebookCallback = function (req, res) {
   res.redirect('/');
 }

@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const auth = require('../controllers/auth');
-const passportFacebook = require('../auth/facebook');
 
 router.get('/signup', auth.getSignup);
 router.post('/signup', auth.signup);
@@ -15,4 +14,5 @@ router.get('/auth/google', auth.google);
 router.get('/auth/google/callback', auth.googleAuth, auth.googleCallback);
 router.get('/auth/facebook', auth.facebook);
 router.get('/auth/facebook/callback', auth.facebookAuth, auth.facebookCallback);
+
 module.exports = router;

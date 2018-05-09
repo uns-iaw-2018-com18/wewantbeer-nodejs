@@ -13,6 +13,7 @@ const apiRouter = require('./app_server/routes/api');
 const authRouter = require('./app_server/routes/auth');
 const app = express();
 const flash = require('connect-flash');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server','views'));
 app.set('view engine', 'twig');
@@ -40,24 +41,10 @@ app.use('/users', userRouter);
 app.use('/api', apiRouter);
 app.use('/', authRouter);
 
-// const session = require('express-session');
-// const FacebookStrategy = require('passport-facebook').Strategy;
-
 const morgan = require('morgan');
 
 // Quiero usar morgan
 app.use(morgan('tiny'));
-
-// passport config
-// requires the model with Passport-Local Mongoose plugged in
-const User = require('./app_server/models/users');
-
-// use static authenticate method of model in LocalStrategy
-passport.use(User.createStrategy());
-
-// use static serialize and deserialize of model for passport session support
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -625,9 +625,33 @@ input {
 }
 
 .login-signup-error-message {
+  height: 80px;
+  width: 790px;
   display: block;
-  margin: 5px 10px;
+  background-color: gray;
+  color: white;
+  margin: 10px;
+  padding: 22px 20px;
   font-size: 24px;
+  outline: 5px solid dimgray;
+  outline-offset: -5px;
+}
+
+  .login-signup-error-message:before {
+    content: "";
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    background: url('../images/icons/warning-w.svg') 0 0 no-repeat;
+    background-size: 100%;
+    background-position: center;
+    margin: 1px 20px 0 0;
+    vertical-align: middle;
+    float: left;
+  }
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
 /* Modal */

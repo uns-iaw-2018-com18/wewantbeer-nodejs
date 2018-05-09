@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const passportLocalMongoose = require('passport-local-mongoose');
 const userSchema = new mongoose.Schema({
   nickname: String,
   password: String,
@@ -27,10 +26,6 @@ const userSchema = new mongoose.Schema({
     token: String,
     name: {givenName: String, familyName: String}
   }
-});
-
-userSchema.plugin(passportLocalMongoose, {
-  selectFields: "username email"
 });
 
 userSchema.methods.generateHash = function(password) {
