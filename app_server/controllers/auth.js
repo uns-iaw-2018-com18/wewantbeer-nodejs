@@ -123,9 +123,9 @@ const logout = function(req, res) {
 // Controladores de las redes sociales
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.use(new GoogleStrategy({
-	    clientID: "883057773753-94nj4230rhpo58hdiettsru28rfc0tmi.apps.googleusercontent.com",
-	    clientSecret: "-hDODhzoP-A8a6NEuZYogwqA",
-	    callbackURL: "http://localhost:3000/auth/google/callback"
+	    clientID: "417187322792-418h3puqt37tckhnfkg06tsk5ms0galo.apps.googleusercontent.com",
+	    clientSecret: "965gh55NJt61Dgg5r7JlQOIV",
+	    callbackURL: "https://wewantbeer.herokuapp.com/auth/google/callback"
 	  },
 	  function(accessToken, refreshToken, profile, done) {
 			process.nextTick(function() {
@@ -164,7 +164,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
 	    clientID: "412740312574930",
 	    clientSecret: "76e4bad865dd61ca13357b2233083960",
-	    callbackURL: "http://localhost:3000/auth/google/callback"
+	    callbackURL: "https://wewantbeer.herokuapp.com/auth/facebook/callback"
 	  },
 	  function(accessToken, refreshToken, profile, done) {
 			process.nextTick(function(){

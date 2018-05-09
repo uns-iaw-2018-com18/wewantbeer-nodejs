@@ -6,7 +6,7 @@ $(function() {
     cervecerias = shuffle(data);
     mostrarCervecerias(3); // Mostrar 3 filas
     loadSearch();
-    $("body").append("<script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UheGSM6zHbQvf0MU5zSrdZNJCdMrZoQ&callback=initMap'></script>");
+    $("body").append("<script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyA49-YJIjkru7cZSlV_t8CxOmSoWO6xhlQ&callback=initMap'></script>");
   });
 });
 
