@@ -1,6 +1,6 @@
 {% extends 'layout.twig' %}
 
-{% block description %}
+{% block meta %}
   <meta name="description" content="Información sobre cervecerías artesanales en la ciudad de Bahía Blanca">
 {% endblock %}
 
@@ -22,11 +22,11 @@
     {% if user %}
       <a id="login-btn" href="/logout?redirect=/">
         {% if user.nickname %}
-            {{user.nickname}}
+          {{user.nickname}}
         {% elseif user.google.name.givenName %}
-            {{user.google.name.givenName}}
+          {{user.google.name.givenName}}
         {% elseif user.facebook.name.givenName %}
-            {{user.facebook.name.givenName}}
+          {{user.facebook.name.givenName}}
         {% endif %}
       </a>
     {% else %}
@@ -48,7 +48,7 @@
   </div>
 {% endblock %}
 
-{% block info %}
+{% block content %}
   <table id="bar-logos-table">
       <!-- Links a las cervecerias -->
   </table>

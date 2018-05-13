@@ -3,7 +3,7 @@
   <head>
     <title>We Want Beer</title>
     <meta charset="UTF-8">
-    {% block description %}{% endblock %}
+    {% block meta %}{% endblock %}
     <meta name="viewport" content="width=830">
     <link rel="shortcut icon" href="/favicon.ico">
 
@@ -38,7 +38,7 @@
     </nav>
 
     <div id="main-container">
-      {% block info %}{% endblock %}
+      {% block content %}{% endblock %}
     </div>
 
     {% block extrainfo %}{% endblock %}
@@ -50,7 +50,8 @@
             Los nombres, marcas, y logotipos relacionados son propiedad de sus respectivos dueños.
           </div>
           <div id="bottom-footer-container">
-            Hecho con <span id="love-icon" aria-label="amor"></span> por <a class="github-user-link" href="https://github.com/rodrigo102195" target="_blank" rel="noopener">Rodrigo Licata</a> y <a class="github-user-link" href="https://github.com/DamianNud" target="_blank" rel="noopener">Damián Nudelman</a>. © 2018.
+            Hecho con <span id="love-icon" aria-label="amor"></span> por <a class="footer-link" href="https://github.com/rodrigo102195" target="_blank" rel="noopener">Rodrigo Licata</a> y <a class="footer-link" href="https://github.com/DamianNud" target="_blank" rel="noopener">Damián Nudelman</a>. © 2018.<br>
+            <span id="footer-about-privacy"><a class="footer-link" href="/about">Sobre We Want Beer</a> | <a class="footer-link" href="/privacy">Privacidad</a></span>
           </div>
         </div>
     </footer>

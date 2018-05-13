@@ -1,11 +1,4 @@
 $(function () {
-  // Cuando el campo pierde el foco
-  $(".login-signup-input").focusout(function() {
-    if ($(this).val() == "") {
-      $(this).next("a").show();
-      $(this).css("background-color", "#E6E6E6");
-    }
-  });
   // Cuando se ingresa un caracter en el campo
   $(".login-signup-input").keydown(function() {
     $(this).next("a").hide();
@@ -50,6 +43,15 @@ $(function () {
           $(".login-signup-error-message").html("El correo electrónico no tiene un formato válido");
         } else {
           $("#main-container").prepend("<span class='login-signup-error-message'>El correo electrónico no tiene un formato válido</span>");
+        }
+        return false;
+      }
+      // Contraseña con un tamaño menor de 8 caracteres
+      if ($("#signup-form").find("input[name='password']").val().length < 8) {
+        if ($(".login-signup-error-message")[0]) {
+          $(".login-signup-error-message").html("La contraseña debe tener al menos 8 caracteres");
+        } else {
+          $("#main-container").prepend("<span class='login-signup-error-message'>La contraseña debe tener al menos 8 caracteres</span>");
         }
         return false;
       }

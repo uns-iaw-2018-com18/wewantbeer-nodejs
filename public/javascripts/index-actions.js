@@ -21,6 +21,9 @@ function mostrarCervecerias(maxRows) {
       mostrar++;
     }
   }
+  for (i = mostrar; i < mostrar + 6 && i < cervecerias.length; i++) { // Precargar imagenes
+    var img = new Image().src = cervecerias[i].logo;
+  }
   if (mostrar == cervecerias.length) {
     $("#arrow-container").hide();
   }
@@ -68,7 +71,7 @@ function agregarMarcador(cerveceria, map) {
   var marker = new google.maps.Marker({
     position: point,
     map: map,
-    url: "bar.html?id=" + cerveceria.id
+    url: "bar/" + cerveceria.id
   });
 
   marker.addListener("mouseover", function() {

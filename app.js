@@ -21,10 +21,10 @@ app.set('view engine', 'twig');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 app.use(require('express-session')({
   secret: 'wewantbeer-s3cr3t',
@@ -39,6 +39,11 @@ app.use(flash());
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 app.use('/', authRouter);
+
+// Handle 404
+app.use(function(req, res) {
+  res.status(404).render('404');
+});
 
 // Quiero usar morgan
 app.use(morgan('tiny'));

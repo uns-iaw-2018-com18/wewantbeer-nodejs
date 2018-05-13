@@ -3,7 +3,12 @@ $(function() {
   formatNumber();
 
   // Mostrar tooltip
-  $("[data-toggle='tooltip']").tooltip();
+  $("[data-toggle='tooltip']").tooltip({
+    fallbackPlacement: 'clockwise'
+  });
+
+  // Precargar icono
+  var img = new Image().src = "../images/icons/delete.svg";
 });
 
 $(function() {

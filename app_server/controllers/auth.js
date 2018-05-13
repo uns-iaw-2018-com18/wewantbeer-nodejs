@@ -4,16 +4,6 @@ var User = require('../models/users');
 var flash = require('connect-flash');
 const queryString = require('query-string');
 
-/* GET signup */
-const getSignup = function(req, res) {
-  if (req.user) {
-    res.redirect('/');
-  } else {
-    var redirect = queryString.parseUrl(req.url).query.redirect;
-    res.render('signup', {user: req.user, redirect: redirect, signupError: req.flash('signupError')});
-  }
-};
-
 passport.use('local-signup', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
@@ -26,16 +16,24 @@ passport.use('local-signup', new LocalStrategy({
 					return done(err);
         }
 				if (user) {
-          // Quiere decir que ya existe una cuenta con ese email
+          // Ya existe un usuario con ese correo electronico
 					return done(null, false, req.flash('signupError', 'Ya existe un usuario con ese correo electrónico'));
 				} else {
-          // La contraseña y la confirmacion de contraseña no coinciden
-          if (req.body.confirmPassword != password) {
-            return done(null, false, req.flash('signupError', 'Las contraseñas no coinciden'));
+          // Tamaños de campos mayores a los permitidos
+          if ((req.body.nickname.length > 16) || (email.length > 32) || (password.length > 32)) {
+            return done(null, false, req.flash('signupError', 'Se superó la cantidad de caracteres permitida en algún campo'));
           }
-          // El email no tiene un formato valido
+          // Formato de correo electronico invalido
           if (!validateEmail(email)) {
             return done(null, false, req.flash('signupError', 'El correo electrónico no tiene un formato válido'));
+          }
+          // Contraseña con un tamaño menor de 8 caracteres
+          if (password.length < 8) {
+            return done(null, false, req.flash('signupError', 'La contraseña debe tener al menos 8 caracteres'));
+          }
+          // Contraseña y confirmacion de contraseña no coinciden
+          if (req.body.confirmPassword != password) {
+            return done(null, false, req.flash('signupError', 'Las contraseñas no coinciden'));
           }
 
 					var newUser = new User({
@@ -92,9 +90,38 @@ passport.use('local-login', new LocalStrategy({
 	})
 );
 
-const signup = passport.authenticate('local-signup', {
-		failureRedirect: '/signup'
-});
+/* GET signup */
+const getSignup = function(req, res) {
+  if (req.user) {
+    res.redirect('/');
+  } else {
+    var redirect = queryString.parseUrl(req.url).query.redirect;
+    res.render('signup', {user: req.user, redirect: redirect, signupError: req.flash('signupError')});
+  }
+};
+
+/* POST signup */
+const signup = function(req, res, next) {
+  var redirect = queryString.parseUrl(req.get('Referrer')).query.redirect;
+  passport.authenticate('local-signup', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) {
+      if (redirect != undefined) {
+        return res.redirect('signup?redirect=' + redirect);
+      } else {
+        return res.redirect('signup');
+      }
+    }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      if (redirect != undefined) {
+        return res.redirect(redirect);
+      } else {
+        return res.redirect('/');
+      }
+    });
+  }) (req, res, next);
+}
 
 /* GET login */
 const getLogin = function(req, res) {
@@ -106,10 +133,30 @@ const getLogin = function(req, res) {
   }
 };
 
-const login = passport.authenticate('local-login', {
-		failureRedirect: '/login'
-});
+/* POST signup */
+const login = function(req, res, next) {
+  var redirect = queryString.parseUrl(req.get('Referrer')).query.redirect;
+  passport.authenticate('local-login', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) {
+      if (redirect != undefined) {
+        return res.redirect('login?redirect=' + redirect);
+      } else {
+        return res.redirect('login');
+      }
+    }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      if (redirect != undefined) {
+        return res.redirect(redirect);
+      } else {
+        return res.redirect('/');
+      }
+    });
+  }) (req, res, next);
+}
 
+/* GET logout */
 const logout = function(req, res) {
   req.logout();
   var redirect = queryString.parseUrl(req.url).query.redirect;
@@ -209,18 +256,36 @@ passport.deserializeUser(function(user, done) {
 
 const google = passport.authenticate('google', {scope: ['profile', 'email']});
 
-const googleAuth = passport.authenticate('google', {failureRedirect: '/login'});
+const googleAuth = function(req, res) {
+  var redirect = queryString.parseUrl(req.get('Referrer')).query.redirect;
+  if (redirect == undefined) { redirect = ''; }
+  passport.authenticate('google', { failureRedirect: '/login' + redirect });
+}
 
 const googleCallback = function(req, res) {
+  var redirect = queryString.parseUrl(req.get('Referrer')).query.redirect;
+  if (redirect != undefined) {
+    res.redirect(redirect);
+  } else {
     res.redirect('/');
+  }
 };
 
-const facebook = passport.authenticate('facebook', {scope:['email']});
+const facebook = passport.authenticate('facebook', {scope: ['email']});
 
-const facebookAuth = passport.authenticate('facebook', {failureRedirect: '/login'});
+const facebookAuth = function(req, res) {
+  var redirect = queryString.parseUrl(req.get('Referrer')).query.redirect;
+  if (redirect == undefined) { redirect = ''; }
+  passport.authenticate('facebook', { failureRedirect: '/login' + redirect });
+}
 
-const facebookCallback = function (req, res) {
-  res.redirect('/');
+const facebookCallback = function(req, res) {
+  var redirect = queryString.parseUrl(req.get('Referrer')).query.redirect;
+  if (redirect != undefined) {
+    res.redirect(redirect);
+  } else {
+    res.redirect('/');
+  }
 }
 
 module.exports = {getSignup, signup, getLogin, login, logout, google, googleAuth, googleCallback, facebook, facebookAuth, facebookCallback};

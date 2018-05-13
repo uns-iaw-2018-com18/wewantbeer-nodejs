@@ -11,4 +11,10 @@ router.get('/bar', function(req, res) {
   res.redirect('/');
 });
 
+/* GET about */
+router.get('/about', ctrlMain.about);
+
+/* GET privacy */
+router.get('/privacy', ctrlMain.privacy);
+
 module.exports = router;

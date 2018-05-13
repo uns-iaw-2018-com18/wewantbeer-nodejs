@@ -1,0 +1,71 @@
+{% extends 'layout.twig' %}
+
+{% block javascript %}
+  <script>
+    var myStyle = '{{user.style}}';
+  </script>
+{% endblock %}
+
+{% block buttons %}
+  <div id="top-navbar">
+    {% if user %}
+      <a id="login-btn" href="/logout?redirect=/privacy">
+        {% if user.nickname %}
+          {{user.nickname}}
+        {% elseif user.google.name.givenName %}
+          {{user.google.name.givenName}}
+        {% elseif user.facebook.name.givenName %}
+          {{user.facebook.name.givenName}}
+        {% endif %}
+      </a>
+    {% else %}
+      <a id="login-btn" href="/login?redirect=/privacy">Ingresar</a>
+    {% endif %}
+    <label id="style-toggle-switch">
+      <input id="switch-checkbox" type="checkbox" checked="checked">
+      <span id="switch-slider"></span>
+    </label>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <span id='about-title'>Privacidad de We Want Beer</span>
+  <hr class="about-line">
+  <div class="about-info" class="text-justify">
+    <span class="about-subtitle">Contenido del sitio:</span>
+    Aunque intentamos asegurarnos de que dicha información estuviera libre de inexactitudes, y se apoyara en fuentes consideradas confiables, la información de este sitios no esta necesariamente completa, exacta o precisa en todos los casos.
+    Nada en este sitio constituye, o intenta constituir, consejo de ningún tipo. La información en este sitio es proporcionada solo con propósitos informativos.
+  </div>
+  <hr class="about-line">
+  <div class="about-info" class="text-justify">
+    <span class="about-subtitle">¿Qué información recolectamos?</span>
+    La información que recolectamos nos permite personalizar y mejorar el servicio provisto.
+    Con relación a ciertos aspectos, podemos solicitar, recolectar y/o mostrar alguna de tu información personal.
+    La entrega de esta información es voluntaria. Todos los servicios provistos pueden ser utilizados sin revelar información personal.
+    Si tu información personal es requerida para procesar alguna solicitud en este sitio, tu participación activa será requerida.
+    Recolectamos la siguiente información de nuestros usuarios registrados.
+  </div>
+  <hr class="about-line">
+  <div class="about-info" class="text-justify">
+    <span class="about-subtitle">Información de la cuenta:</span>
+    Cuando te registrás, proveés información que puede ser información personal, como un nombre y una dirección de correo electrónico.
+    Las contraseñas provistas por el usuario son almacenadas utilizando un sistema de encriptado seguro.
+    También podés registrarte utilizando un servicio externo (como las credenciales de ingreso de tu cuenta de red social).
+    Si elegís utilizar este servicio, podemos recibir información personal que le permitís a dicho servicio externo compartir con nosotros.
+    Reconocés que esta información puede ser personal para vos, y creando una cuenta y proporcionandonos información personal, permitís a otros, incluyendonos, identificarte y por lo tanto podrías no ser anónimo.
+    Toda la información proporcionada por el usuario se encuentra almacenada en una base de datos externa provista por mLab.
+    No otorgamos de ninguna forma dicha información a terceros.
+  </div>
+  <hr class="about-line">
+  <div class="about-info" class="text-justify">
+    <span class="about-subtitle">Contenido del usuario:</span>
+    Algunas características del servicio te permiten proporcionar contenido, como dar un puntaje. Todo el contenido enviado por el usuario puede ser retenido por nosotros indefinidamente.
+    Esta información es mostrada en el sitio de forma anónima, sin revelar información personal.
+  </div>
+  <hr class="about-line">
+  <div class="about-info" class="text-justify">
+    <span class="about-subtitle">Referencias y enlaces:</span>
+    En algunos casos hay referencias a sitios externos u otros documentos en Internet. No somos responsables por el contenido de los mismos.
+    Al momento de establecer dichos enlaces, no había evidencia de contenido ilegal en el respectivo sitio. No tenemos influencia sobre el diseño actual o futuro, el contenido o los derechos de autor del sitio enlazado.
+  </div>
+{% endblock %}

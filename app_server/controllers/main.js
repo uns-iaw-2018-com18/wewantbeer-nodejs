@@ -19,23 +19,43 @@ const bar = function(req, res) {
         user = usuario;
     })
   }
-  Cervecerias.findOne({'id': req.params.id}).exec((err, cerveza) => {
-      if (err || cerveza == null) {
+  Cervecerias.findOne({'id': req.params.id}).exec((err, cerveceria) => {
+      if (err || cerveceria == null) {
         res.render('notfound', {user: user, search: req.params.id});
       } else {
         if (req.user) {
           users.findOne({"_id": req.user._id}, {"rating": {$elemMatch: {"bar": req.params.id}}}).exec((err, result) => {
             if (err || result.rating === undefined || result.rating.length == 0) {
-              res.render('bar', {user: user, myRating: 0, cerveza: cerveza, horarios: horario(cerveza)});
+              res.render('bar', {user: user, myRating: 0, cerveceria: cerveceria, horarios: horario(cerveceria)});
             } else {
-              res.render('bar', {user: user, myRating: Number(result.rating[0].count), cerveza: cerveza, horarios: horario(cerveza)});
+              res.render('bar', {user: user, myRating: Number(result.rating[0].count), cerveceria: cerveceria, horarios: horario(cerveceria)});
             }
           });
         } else {
-          res.render('bar', {user: user, cerveza: cerveza, horarios: horario(cerveza)});
+          res.render('bar', {user: user, cerveceria: cerveceria, horarios: horario(cerveceria)});
         }
       }
     })
+};
+
+const about = function(req, res) {
+  if (req.user) {
+    users.findOne({'_id': req.user._id}).exec((err, usuario) => {
+        res.render('about', {user: usuario});
+    })
+  } else {
+    res.render('about', {user: req.user});
+  }
+};
+
+const privacy = function(req, res) {
+  if (req.user) {
+    users.findOne({'_id': req.user._id}).exec((err, usuario) => {
+        res.render('privacy', {user: usuario});
+    })
+  } else {
+    res.render('privacy', {user: req.user});
+  }
 };
 
 function horario(cerveceria) {
@@ -53,4 +73,4 @@ function horario(cerveceria) {
   return toRet;
 }
 
-module.exports = {index, bar};
+module.exports = {index, bar, about, privacy};

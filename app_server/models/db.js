@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-//const dbURI = 'mongodb://localhost/cervecerias';
+// const dbURI = 'mongodb://localhost/wewantbeer';
 const dbURI = process.env.MLAB_URI;
 mongoose.connect(dbURI);
 

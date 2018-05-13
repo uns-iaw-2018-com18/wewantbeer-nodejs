@@ -6,11 +6,7 @@ body {
   overflow: auto;
 }
 
-input {
-  font-size: 28px; /* Evitar zoom movil */
-}
-
-/* index.html */
+/* Index */
 
 #top-navbar {
   height: 41px;
@@ -243,6 +239,7 @@ input {
 }
 
 #bottom-footer-container {
+  margin: 5px 0 0 0;
   font-size: 21px;
 }
 
@@ -255,11 +252,15 @@ input {
   background-position: center;
 }
 
-.github-user-link, .github-user-link:hover {
+.footer-link, .footer-link:hover {
   color: white;
 }
 
-/* bar.html */
+#footer-about-privacy {
+  font-size: 18px;
+}
+
+/* Bar */
 
 #info-bar-logo {
   height: 250px;
@@ -349,12 +350,6 @@ input {
   float: right;
   margin: 0 20px 0 0;
 }
-
-  /* Precargar icono */
-  #rating-container:after {
-    display: none;
-    content: url('../images/icons/delete.svg');
-  }
 
 #info-rating-number {
   line-height: normal;
@@ -497,7 +492,7 @@ input {
     background-color: gainsboro;
   }
 
-/* login.html / signup.html */
+/* Login / Signup */
 
 .login-signup-input {
   height: 50px;
@@ -653,6 +648,52 @@ input {
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px white inset;
 }
+
+/* About */
+
+#about-title {
+  display: block;
+  margin: 0 10px;
+  font-size: 28px;
+}
+
+.about-info {
+  height: auto;
+  width: auto;
+  display: block;
+  font-size: 18px;
+  margin: 0 10px;
+}
+
+.about-line {
+  margin: 20px 10px;
+  border: 0.5px solid gray;
+}
+
+.about-text {
+  display: block;
+  font-size: 18px;
+  margin: 5px 10px;
+}
+
+.about-subtitle {
+  display: block;
+  font-size: 24px;
+  margin: 0 0 10px 0;
+}
+
+.about-link {
+  color: gray;
+  display: inline-block;
+  font-size: 18px;
+  margin: 3px 10px;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+  .about-link:hover {
+    color: black;
+  }
 
 /* Modal */
 
