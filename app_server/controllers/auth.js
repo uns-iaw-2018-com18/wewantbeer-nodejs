@@ -1,7 +1,7 @@
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var User = require('../models/users');
-var flash = require('connect-flash');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const User = require('../models/users');
+const flash = require('connect-flash');
 const queryString = require('query-string');
 
 passport.use('local-signup', new LocalStrategy({
@@ -121,7 +121,7 @@ const signup = function(req, res, next) {
       }
     });
   }) (req, res, next);
-}
+};
 
 /* GET login */
 const getLogin = function(req, res) {
@@ -154,7 +154,7 @@ const login = function(req, res, next) {
       }
     });
   }) (req, res, next);
-}
+};
 
 /* GET logout */
 const logout = function(req, res) {
@@ -254,16 +254,18 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-const google = passport.authenticate('google', {scope: ['profile', 'email']});
-
 const googleAuth = function(req, res) {
-  var redirect = queryString.parseUrl(req.get('Referrer')).query.redirect;
-  if (redirect == undefined) { redirect = ''; }
+  var redirect = req.session.redirect;
+  if (redirect != undefined) {
+    redirect = '?redirect=' + redirect;
+  } else {
+    redirect = '';
+  }
   passport.authenticate('google', { failureRedirect: '/login' + redirect });
-}
+};
 
 const googleCallback = function(req, res) {
-  var redirect = queryString.parseUrl(req.get('Referrer')).query.redirect;
+  var redirect = req.session.redirect;
   if (redirect != undefined) {
     res.redirect(redirect);
   } else {
@@ -271,21 +273,23 @@ const googleCallback = function(req, res) {
   }
 };
 
-const facebook = passport.authenticate('facebook', {scope: ['email']});
-
 const facebookAuth = function(req, res) {
-  var redirect = queryString.parseUrl(req.get('Referrer')).query.redirect;
-  if (redirect == undefined) { redirect = ''; }
+  var redirect = req.session.redirect;
+  if (redirect != undefined) {
+    redirect = '?redirect=' + redirect;
+  } else {
+    redirect = '';
+  }
   passport.authenticate('facebook', { failureRedirect: '/login' + redirect });
-}
+};
 
 const facebookCallback = function(req, res) {
-  var redirect = queryString.parseUrl(req.get('Referrer')).query.redirect;
+  var redirect = req.session.redirect;
   if (redirect != undefined) {
     res.redirect(redirect);
   } else {
     res.redirect('/');
   }
-}
+};
 
-module.exports = {getSignup, signup, getLogin, login, logout, google, googleAuth, googleCallback, facebook, facebookAuth, facebookCallback};
+module.exports = {getSignup, signup, getLogin, login, logout, googleAuth, googleCallback, facebookAuth, facebookCallback};
