@@ -254,42 +254,20 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-const googleAuth = function(req, res) {
-  var redirect = req.session.redirect;
-  if (redirect != undefined) {
-    redirect = '?redirect=' + redirect;
-  } else {
-    redirect = '';
-  }
-  passport.authenticate('google', { failureRedirect: '/login' + redirect });
-};
+const google = passport.authenticate('google', {scope: ['profile', 'email']});
+
+const googleAuth = passport.authenticate('google', {failureRedirect: '/login'});
 
 const googleCallback = function(req, res) {
-  var redirect = req.session.redirect;
-  if (redirect != undefined) {
-    res.redirect(redirect);
-  } else {
-    res.redirect('/');
-  }
+  res.redirect('/');
 };
 
-const facebookAuth = function(req, res) {
-  var redirect = req.session.redirect;
-  if (redirect != undefined) {
-    redirect = '?redirect=' + redirect;
-  } else {
-    redirect = '';
-  }
-  passport.authenticate('facebook', { failureRedirect: '/login' + redirect });
-};
+const facebook = passport.authenticate('facebook', {scope: ['email']});
+
+const facebookAuth = passport.authenticate('facebook', {failureRedirect: '/login'});
 
 const facebookCallback = function(req, res) {
-  var redirect = req.session.redirect;
-  if (redirect != undefined) {
-    res.redirect(redirect);
-  } else {
-    res.redirect('/');
-  }
+  res.redirect('/');
 };
 
-module.exports = {getSignup, signup, getLogin, login, logout, googleAuth, googleCallback, facebookAuth, facebookCallback};
+module.exports = {getSignup, signup, getLogin, login, logout, google, googleAuth, googleCallback, facebook, facebookAuth, facebookCallback};
