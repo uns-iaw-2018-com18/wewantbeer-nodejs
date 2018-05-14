@@ -649,11 +649,19 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
+.captcha-container {
+  height: 100px;
+  max-width: 790px;
+  overflow: hidden;
+  display: block;
+  margin: 10px;
+}
+
 /* About */
 
 #about-title {
   display: block;
-  margin: 0 10px;
+  margin: 5px 10px 0 10px;
   font-size: 28px;
 }
 
@@ -662,31 +670,20 @@ input:-webkit-autofill {
   width: auto;
   display: block;
   font-size: 18px;
-  margin: 0 10px;
-}
-
-.about-line {
-  margin: 20px 10px;
-  border: 0.5px solid gray;
-}
-
-.about-text {
-  display: block;
-  font-size: 18px;
-  margin: 5px 10px;
+  margin: 10px 10px 5px 10px;
 }
 
 .about-subtitle {
   display: block;
   font-size: 24px;
-  margin: 0 0 10px 0;
+  margin: 10px 10px 0 10px;
 }
 
 .about-link {
   color: gray;
   display: inline-block;
   font-size: 18px;
-  margin: 3px 10px;
+  margin: 5px 0 0 0;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -805,14 +802,6 @@ input:-webkit-autofill {
 .tooltip-inner {
   max-width: 100%;
   border-radius: 0;
-}
-
-.captcha-container {
-  height: 100px;
-  max-width: 790px;
-  overflow: hidden;
-  display: block;
-  margin: 10px;
 }
 
 .g-recaptcha {
