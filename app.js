@@ -42,7 +42,15 @@ app.use('/', authRouter);
 
 // Handle 404
 app.use(function(req, res) {
-  res.status(404).render('404');
+  const mongoose = require('mongoose');
+  const users = mongoose.model('users');
+  if (req.user) {
+    users.findOne({'_id': req.user._id}).exec((err, usuario) => {
+      res.status(404).render('404', {user: usuario});
+    })
+  } else {
+    res.status(404).render('404', {user: req.user});
+  }
 });
 
 // Quiero usar morgan

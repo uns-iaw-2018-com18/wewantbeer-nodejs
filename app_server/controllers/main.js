@@ -5,7 +5,7 @@ const users = mongoose.model('users');
 const index = function(req, res) {
   if (req.user) {
     users.findOne({'_id': req.user._id}).exec((err, usuario) => {
-        res.render('index', {user: usuario});
+      res.render('index', {user: usuario});
     })
   } else {
     res.render('index', {user: req.user});
@@ -16,7 +16,7 @@ const bar = function(req, res) {
   var user = req.user;
   if (req.user) {
     users.findOne({'_id': req.user._id}).exec((err, usuario) => {
-        user = usuario;
+      user = usuario;
     })
   }
   Cervecerias.findOne({'id': req.params.id}).exec((err, cerveceria) => {
@@ -41,7 +41,7 @@ const bar = function(req, res) {
 const about = function(req, res) {
   if (req.user) {
     users.findOne({'_id': req.user._id}).exec((err, usuario) => {
-        res.render('about', {user: usuario});
+      res.render('about', {user: usuario});
     })
   } else {
     res.render('about', {user: req.user});
@@ -51,7 +51,7 @@ const about = function(req, res) {
 const privacy = function(req, res) {
   if (req.user) {
     users.findOne({'_id': req.user._id}).exec((err, usuario) => {
-        res.render('privacy', {user: usuario});
+      res.render('privacy', {user: usuario});
     })
   } else {
     res.render('privacy', {user: req.user});

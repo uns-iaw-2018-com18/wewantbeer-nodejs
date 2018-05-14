@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/users');
 const flash = require('connect-flash');
 const queryString = require('query-string');
+const request = require('request');
 
 passport.use('local-signup', new LocalStrategy({
     usernameField: 'email',
@@ -34,6 +35,22 @@ passport.use('local-signup', new LocalStrategy({
           // Contraseña y confirmacion de contraseña no coinciden
           if (req.body.confirmPassword != password) {
             return done(null, false, req.flash('signupError', 'Las contraseñas no coinciden'));
+          }
+          // reCaptcha no seleccionado
+          if ((req.body['g-recaptcha-response'] == undefined) || (req.body['g-recaptcha-response'] == '') || (req.body['g-recaptcha-response'] == null)) {
+            return done(null, false, req.flash('signupError', 'Por favor, marcá que no sos un robot'));
+          } else {
+            const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+            const captcha = req.body['g-recaptcha-response'];
+            const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+            // Enviar valores a Google para verificacion
+            request.post(verifyUrl, {'form': {'secret': secretKey, 'response': captcha}}, function(err, response, body) {
+              body = JSON.parse(body);
+              // Si no fue exitoso
+              if ((body.success != undefined) && (!body.success)) {
+                return done(null, false, req.flash('signupError', 'Falló la verificación'));
+              }
+            });
           }
 
 					var newUser = new User({

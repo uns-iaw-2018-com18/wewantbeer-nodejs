@@ -64,6 +64,15 @@ $(function () {
         }
         return false;
       }
+      var captcha = grecaptcha.getResponse();
+      if ((captcha == undefined) || (captcha == "") || (captcha == null)) {
+        if ($(".login-signup-error-message")[0]) {
+          $(".login-signup-error-message").html("Por favor, marcá que no sos un robot");
+        } else {
+          $("#main-container").prepend("<span class='login-signup-error-message'>Por favor, marcá que no sos un robot</span>");
+        }
+        return false;
+      }
     }
   });
   // Desactivar evento del boton de aviso
