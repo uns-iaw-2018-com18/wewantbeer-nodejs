@@ -807,10 +807,15 @@ input:-webkit-autofill {
   border-radius: 0;
 }
 
+.captcha-container {
+  height: 100px;
+  max-width: 790px;
+  overflow: hidden;
+  display: block;
+  margin: 10px;
+}
+
 .g-recaptcha {
-  height: 75px;
-  width: auto;
-  margin: 10px 10px 35px 10px;
   transform: scale(1.3);
   -webkit-transform: scale(1.3);
   transform-origin: 0 0;
