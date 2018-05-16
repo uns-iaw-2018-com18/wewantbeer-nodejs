@@ -71,7 +71,7 @@ function agregarMarcador(cerveceria, map) {
   var marker = new google.maps.Marker({
     position: point,
     map: map,
-    url: "bar/" + cerveceria.id
+    url: "bar/" + cerveceria.id + "?source=map"
   });
 
   marker.addListener("mouseover", function() {

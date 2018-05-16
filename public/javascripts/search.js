@@ -35,9 +35,9 @@ function getNamesFromJSON(cervecerias) {
 function goToSearch(value) {
   var id = getIdByName(value);
   if (id !== undefined) {
-    window.location.href = "bar/" + id + "/";
+    window.location.href = "bar/" + id + "?source=search";
   } else {
-    window.location.href = "bar/" + value.toLowerCase().replace(/\s+/g, '_') + "/";
+    window.location.href = "bar/" + value.toLowerCase().replace(/\s+/g, '_') + "?source=search";
   }
 }
 
