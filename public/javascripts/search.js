@@ -1,5 +1,6 @@
 function loadSearch() {
   var availableTags = getNamesFromJSON(cervecerias);
+  availableTags.sort(); // Ordenar nombres alfabeticamente
   $("#search-input").autocomplete({
     source: availableTags,
     select: function(event, ui) {
@@ -50,9 +51,9 @@ function getIdByName(name) {
   return id;
 }
 
-// Overrides the default autocomplete filter function to search only from the beginning of the string
+// Overrides the default autocomplete filter function to search only from the beginning of each word
 $.ui.autocomplete.filter = function (array, term) {
-    var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
+    var matcher = new RegExp("\\b" + $.ui.autocomplete.escapeRegex(term), "i");
     return $.grep(array, function (value) {
         return matcher.test(value.label || value.value || value);
     });

@@ -37,6 +37,15 @@ $(function () {
       }
       return false;
     } else {
+      // Formato de nombre invalido
+      if (!validateNickname($("#signup-form").find("input[name='nickname']").val())) {
+        if ($(".login-signup-error-message")[0]) {
+          $(".login-signup-error-message").html("El nombre solo puede contener letras");
+        } else {
+          $("#main-container").prepend("<span class='login-signup-error-message'>El nombre solo puede contener letras</span>");
+        }
+        return false;
+      }
       // Formato de correo electronico invalido
       if (!validateEmail($("#signup-form").find("input[name='email']").val())) {
         if ($(".login-signup-error-message")[0]) {
@@ -90,6 +99,11 @@ $(function () {
   // Mostrar tooltip
   $("[data-toggle='tooltip']").tooltip();
 });
+
+function validateNickname(name) {
+  var re = /^[a-zA-Z]+$/;
+  return re.test(String(name));
+}
 
 function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

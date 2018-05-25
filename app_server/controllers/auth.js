@@ -21,8 +21,12 @@ passport.use('local-signup', new LocalStrategy({
 					return done(null, false, req.flash('signupError', 'Ya existe un usuario con ese correo electrónico'));
 				} else {
           // Tamaños de campos mayores a los permitidos
-          if ((req.body.nickname.length > 16) || (email.length > 32) || (password.length > 32)) {
+          if ((req.body.nickname.length > 16) || (email.length > 32) || (password.length > 32) || (req.body.confirmPassword.length > 32)) {
             return done(null, false, req.flash('signupError', 'Se superó la cantidad de caracteres permitida en algún campo'));
+          }
+          // Formato de nombre invalido
+          if (!validateNickname(req.body.nickname)) {
+            return done(null, false, req.flash('signupError', 'El nombre solo puede contener letras'));
           }
           // Formato de correo electronico invalido
           if (!validateEmail(email)) {
@@ -70,6 +74,11 @@ passport.use('local-signup', new LocalStrategy({
 		});
 	})
 );
+
+function validateNickname(name) {
+  var re = /^[a-zA-Z]+$/;
+  return re.test(String(name));
+}
 
 function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
