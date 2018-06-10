@@ -39,47 +39,27 @@ $(function () {
     } else {
       // Formato de nombre invalido
       if (!validateNickname($("#signup-form").find("input[name='nickname']").val())) {
-        if ($(".login-signup-error-message")[0]) {
-          $(".login-signup-error-message").html("El nombre solo puede contener letras");
-        } else {
-          $("#main-container").prepend("<span class='login-signup-error-message'>El nombre solo puede contener letras</span>");
-        }
+        showError("El nombre solo puede contener letras");
         return false;
       }
       // Formato de correo electronico invalido
       if (!validateEmail($("#signup-form").find("input[name='email']").val())) {
-        if ($(".login-signup-error-message")[0]) {
-          $(".login-signup-error-message").html("El correo electrónico no tiene un formato válido");
-        } else {
-          $("#main-container").prepend("<span class='login-signup-error-message'>El correo electrónico no tiene un formato válido</span>");
-        }
+        showError("El correo electrónico no tiene un formato válido");
         return false;
       }
       // Contraseña con un tamaño menor de 8 caracteres
       if ($("#signup-form").find("input[name='password']").val().length < 8) {
-        if ($(".login-signup-error-message")[0]) {
-          $(".login-signup-error-message").html("La contraseña debe tener al menos 8 caracteres");
-        } else {
-          $("#main-container").prepend("<span class='login-signup-error-message'>La contraseña debe tener al menos 8 caracteres</span>");
-        }
+        showError("La contraseña debe tener al menos 8 caracteres");
         return false;
       }
       // Contraseña y confirmacion de contraseña no coinciden
       if ($("#signup-form").find("input[name='password']").val() != $("#signup-form").find("input[name='confirmPassword']").val()) {
-        if ($(".login-signup-error-message")[0]) {
-          $(".login-signup-error-message").html("Las contraseñas no coinciden");
-        } else {
-          $("#main-container").prepend("<span class='login-signup-error-message'>Las contraseñas no coinciden</span>");
-        }
+        showError("Las contraseñas no coinciden");
         return false;
       }
       var captcha = grecaptcha.getResponse();
       if ((captcha == undefined) || (captcha == "") || (captcha == null)) {
-        if ($(".login-signup-error-message")[0]) {
-          $(".login-signup-error-message").html("Por favor, marcá que no sos un robot");
-        } else {
-          $("#main-container").prepend("<span class='login-signup-error-message'>Por favor, marcá que no sos un robot</span>");
-        }
+        showError("Por favor, marcá que no sos un robot");
         return false;
       }
     }
@@ -99,6 +79,14 @@ $(function () {
   // Mostrar tooltip
   $("[data-toggle='tooltip']").tooltip();
 });
+
+function showError(text) {
+  if ($(".login-signup-error-message")[0]) {
+    $(".login-signup-error-message").html(text);
+  } else {
+    $("#main-container").prepend("<span class='login-signup-error-message'>" + text + "</span>");
+  }
+}
 
 function validateNickname(name) {
   var re = /^[a-zA-Z]+$/;
